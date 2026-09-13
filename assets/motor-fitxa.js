@@ -8,6 +8,7 @@
  *     scriptUrl: "https://script.google.com/macros/s/.../exec",
  *     activitat: "S1 Forces i esforços",
  *     ambSolucions: false,
+ *     comprovaDespresEntrega: true,
  *     opcions: ["Tracció","Compressió","Flexió","Torsió","Cisallament"],
  *     titols: {a11:"1.1 ...", a12:"1.2 ...", ...}
  *   });
@@ -17,6 +18,13 @@
  * vegada que algú entrega la fitxa. Totes les sessions poden compartir el
  * mateix full de càlcul i el mateix SCRIPT_URL; només cal canviar aquest
  * nom a cada pàgina nova.
+ *
+ * "comprovaDespresEntrega" (per defecte false) amaga els botons "Comprova"
+ * i "Torna-ho a provar" de totes les activitats perquè l'alumnat pensi les
+ * respostes sense feedback immediat. En prémer "Entrega la fitxa", el motor
+ * corregeix igualment totes les activitats per calcular la nota real que
+ * s'envia al full de càlcul, i deixa visible el botó "Comprova" (no el de
+ * "Torna-ho a provar") perquè després puguin repassar què han fallat.
  *
  * Requereix, a l'HTML de cada activitat, la mateixa estructura que ja fem
  * servir: .activitat[data-activitat], select[data-c] / input[data-c] amb la
@@ -38,6 +46,7 @@ const FitxaEngine = (function () {
       scriptUrl,
       activitat = "Respostes",
       ambSolucions = false,
+      comprovaDespresEntrega = false,
       opcions = [],
       titols = {}
     } = config;
@@ -56,6 +65,14 @@ const FitxaEngine = (function () {
     if (!ambSolucions) {
       document.querySelectorAll('button[data-accio="solucio"]').forEach(b => b.remove());
       document.querySelectorAll(".solucio").forEach(s => { s.removeAttribute("data-sol"); s.remove(); });
+    }
+
+    // 2b) si cal amagar la comprovació fins que s'entregui la fitxa, els
+    //     botons "Comprova" i "Torna-ho a provar" es queden ocults (no
+    //     eliminats: "Comprova" es tornarà a mostrar en entregar)
+    if (comprovaDespresEntrega) {
+      document.querySelectorAll('button[data-accio="comprova"]').forEach(b => { b.hidden = true; });
+      document.querySelectorAll('button[data-accio="neteja"]').forEach(b => { b.hidden = true; });
     }
 
     // 3) omple tots els desplegables amb les opcions d'aquesta fitxa
@@ -177,10 +194,25 @@ const FitxaEngine = (function () {
           estatEntrega.className = "estat-entrega error";
           return;
         }
+
+        const buits = Array.from(document.querySelectorAll("select[data-c]")).filter(sel => sel.value === "");
+        if (buits.length) {
+          estatEntrega.textContent = "Respon totes les preguntes abans d'entregar la fitxa.";
+          estatEntrega.className = "estat-entrega error";
+          buits[0].scrollIntoView({ behavior: "smooth", block: "center" });
+          buits[0].focus();
+          return;
+        }
+
         if (!scriptUrl || scriptUrl.includes("ENGANXA_AQUI")) {
           estatEntrega.textContent = "La fitxa encara no està connectada al full de càlcul (falta l'URL de l'Apps Script).";
           estatEntrega.className = "estat-entrega error";
           return;
+        }
+
+        if (comprovaDespresEntrega) {
+          document.querySelectorAll(".activitat").forEach(comprova);
+          document.querySelectorAll('button[data-accio="comprova"]').forEach(b => { b.hidden = false; });
         }
 
         let totalEncerts = 0, totalPreguntes = 0, solucionsConsultades = 0;
@@ -215,8 +247,9 @@ const FitxaEngine = (function () {
 
         fetch(scriptUrl, { method: "POST", mode: "no-cors", body: dades })
           .then(() => {
-            estatEntrega.textContent = `Fitxa entregada, ${nom}. Encerts: ${totalEncerts}/${totalPreguntes}.`;
+            estatEntrega.textContent = `Fitxa entregada, ${nom}. Encerts: ${totalEncerts}/${totalPreguntes}. Si canvies alguna resposta, pots tornar a entregar-la.`;
             estatEntrega.className = "estat-entrega ok";
+            btnEntrega.disabled = false;
           })
           .catch(() => {
             estatEntrega.textContent = "No s'ha pogut enviar. Comprova la connexió i torna-ho a provar.";

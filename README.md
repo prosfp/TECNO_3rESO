@@ -64,6 +64,14 @@ sentit "entregar" res des d'aquí). Segueix el mateix patró quan facis una
 sessió nova: duplica `index.html` a `solucions.html`, posa `ambSolucions:
 true` i treu les seccions `identificacio` i `entrega`.
 
+A la pàgina de l'alumnat (`index.html`), l'opció `comprovaDespresEntrega:
+true` de `FitxaEngine.init({...})` amaga els botons "Comprova" i "Torna-ho a
+provar" de totes les activitats fins que l'alumne entrega la fitxa, perquè
+primer ho hagi de raonar sense feedback immediat. En entregar, el motor
+corregeix igualment totes les activitats per calcular la nota real que
+arriba al full de càlcul, i deixa visible el botó "Comprova" (no el de
+"Torna-ho a provar") perquè després puguin repassar què han fallat.
+
 ⚠️ **Important**: GitHub Pages publica tot el que hi ha al repositori. Que
 `solucions.html` no estigui enllaçat des de l'índex no el fa privat: qui
 tingui la URL directa (`.../s1-forces-esforcos/solucions.html`) hi pot
