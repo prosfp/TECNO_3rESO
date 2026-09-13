@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S1 · Forces, esforços i estructures a la bici — Activitats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/estil.css">
+</head>
+<body>
+
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="xip"><i style="background:var(--traccio)"></i>Tracció</span>
+    <span class="xip"><i style="background:var(--compressio)"></i>Compressió</span>
+    <span class="xip"><i style="background:var(--flexio)"></i>Flexió</span>
+    <span class="xip"><i style="background:var(--torsio)"></i>Torsió</span>
+    <span class="xip"><i style="background:var(--cisallament)"></i>Cisallament</span>
+    <span class="marcador" id="marcador" aria-live="polite">0 de 5 activitats resoltes</span>
+  </div>
+</div>
+
+<header class="portada">
+  <p class="sessio">Sessió 1 · Tecnologia i Digitalització · 3r ESO</p>
+  <h1>Forces, esforços i estructures a la bici</h1>
+  <p class="entradeta">Cinc maneres diferents de fer patir un material. Abans de començar les activitats, mira com actuen les forces en cada cas: les fletxes t'ho diuen tot.</p>
+</header>
+
+<section class="identificacio">
+  <div class="id-caixa">
+    <div class="id-camp">
+      <label for="camp-nom">Nom i cognoms</label>
+      <input type="text" id="camp-nom" autocomplete="name" placeholder="Escriu el teu nom">
+    </div>
+    <div class="id-camp">
+      <label for="camp-grup">Grup</label>
+      <select id="camp-grup">
+        <option value="">Tria el grup…</option>
+        <option value="3r ESO A">3r ESO A</option>
+        <option value="3r ESO B">3r ESO B</option>
+        <option value="3r ESO C">3r ESO C</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<section class="mostrari" aria-label="Els cinc tipus d'esforç">
+
+  <div class="esforc" style="--c:var(--traccio)">
+    <svg viewBox="0 0 120 70" role="img" aria-label="Dues forces estiren una barra cap enfora">
+      <rect x="32" y="30" width="56" height="10" fill="#cfd9dd"/>
+      <path d="M32 35 H14 M20 29 L12 35 L20 41" fill="none" stroke="#1d6fb8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M88 35 H106 M100 29 L108 35 L100 41" fill="none" stroke="#1d6fb8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <b>Tracció</b><span>Estira i allarga</span>
+  </div>
+
+  <div class="esforc" style="--c:var(--compressio)">
+    <svg viewBox="0 0 120 70" role="img" aria-label="Dues forces pressionen una barra cap endins">
+      <rect x="32" y="28" width="56" height="14" fill="#cfd9dd"/>
+      <path d="M12 35 H30 M24 29 L32 35 L24 41" fill="none" stroke="#b8352a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M108 35 H90 M96 29 L88 35 L96 41" fill="none" stroke="#b8352a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <b>Compressió</b><span>Aixafa i escurça</span>
+  </div>
+
+  <div class="esforc" style="--c:var(--flexio)">
+    <svg viewBox="0 0 120 70" role="img" aria-label="Una barra recolzada als extrems es corba amb una força al mig">
+      <path d="M18 30 Q60 58 102 30" fill="none" stroke="#cfd9dd" stroke-width="10" stroke-linecap="round"/>
+      <path d="M14 32 L18 24 L22 32 Z M98 32 L102 24 L106 32 Z" fill="#8fa3ab"/>
+      <path d="M60 8 V36 M54 30 L60 38 L66 30" fill="none" stroke="#1c7f58" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <b>Flexió</b><span>Corba i fa panxa</span>
+  </div>
+
+  <div class="esforc" style="--c:var(--torsio)">
+    <svg viewBox="0 0 120 70" role="img" aria-label="Una barra es gira pels dos extrems en sentits contraris">
+      <rect x="30" y="30" width="60" height="10" fill="#cfd9dd"/>
+      <path d="M30 22 A12 13 0 1 0 30 48" fill="none" stroke="#6f46ad" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M24 44 L30 49 L36 45" fill="none" stroke="#6f46ad" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M90 48 A12 13 0 1 0 90 22" fill="none" stroke="#6f46ad" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M96 26 L90 21 L84 25" fill="none" stroke="#6f46ad" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <b>Torsió</b><span>Gira i cargola</span>
+  </div>
+
+  <div class="esforc" style="--c:var(--cisallament)">
+    <svg viewBox="0 0 120 70" role="img" aria-label="Dues forces oposades i molt properes tallen una peça">
+      <rect x="30" y="20" width="60" height="15" fill="#cfd9dd"/>
+      <rect x="30" y="37" width="60" height="15" fill="#b9c6cb"/>
+      <path d="M14 27 H40 M34 21 L42 27 L34 33" fill="none" stroke="#a8760a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M106 45 H80 M86 39 L78 45 L86 51" fill="none" stroke="#a8760a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <b>Cisallament</b><span>Talla i llisca</span>
+  </div>
+
+</section>
+
+<main>
+
+<!-- ============ 1.1 ============ -->
+<section class="activitat" data-activitat="a11">
+  <h2><em>1.1</em> Cada objecte, el seu esforç</h2>
+  <p class="consigna">Relaciona cada objecte de la imatge amb un tipus d'esforç: tracció, compressió, flexió, torsió o cisallament.</p>
+
+  <figure class="figura">
+    <img src="imatges/activitat-1-1.png" alt="Cinc objectes sotmesos a esforços diferents, etiquetats de la a) a la e)"
+         onerror="this.insertAdjacentHTML('afterend','&lt;div class=\'falta-imatge\'&gt;Falta la imatge de l\'activitat. Desa-la com a &lt;code&gt;imatges/activitat-1-1.png&lt;/code&gt; al costat d\'aquest fitxer, o canvia el &lt;code&gt;src&lt;/code&gt; d\'aquesta etiqueta &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; per l\'adreça on la tinguis penjada.&lt;/div&gt;'); this.remove();">
+  </figure>
+
+  <ul class="respostes">
+    <li><span class="lletra">a</span><span class="enunciat">Objecte a)</span>
+      <select data-c="Q2lzYWxsYW1lbnQ=" aria-label="Esforç de l'objecte a"></select></li>
+    <li><span class="lletra">b</span><span class="enunciat">Objecte b)</span>
+      <select data-c="VHJhY2Npw7M=" aria-label="Esforç de l'objecte b"></select></li>
+    <li><span class="lletra">c</span><span class="enunciat">Objecte c)</span>
+      <select data-c="VG9yc2nDsw==" aria-label="Esforç de l'objecte c"></select></li>
+    <li><span class="lletra">d</span><span class="enunciat">Objecte d)</span>
+      <select data-c="Q29tcHJlc3Npw7M=" aria-label="Esforç de l'objecte d"></select></li>
+    <li><span class="lletra">e</span><span class="enunciat">Objecte e)</span>
+      <select data-c="RmxleGnDsw==" aria-label="Esforç de l'objecte e"></select></li>
+  </ul>
+
+  <div class="accions">
+    <button type="button" data-accio="comprova">Comprova</button>
+    <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+    <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+    <span class="veredicte" aria-live="polite"></span>
+  </div>
+</section>
+
+<!-- ============ 1.2 ============ -->
+<section class="activitat" data-activitat="a12">
+  <h2><em>1.2</em> De què depèn la resistència</h2>
+  <p class="consigna">Marca de quins factors depèn la resistència d'un objecte a un esforç determinat. N'hi ha més d'un.</p>
+
+  <ul class="caselles">
+    <li><label><input type="checkbox" data-c="dHJ1ZQ=="><span>a) Tipus de material</span></label></li>
+    <li><label><input type="checkbox" data-c="ZmFsc2U="><span>b) Color</span></label></li>
+    <li><label><input type="checkbox" data-c="dHJ1ZQ=="><span>c) Forma</span></label></li>
+    <li><label><input type="checkbox" data-c="dHJ1ZQ=="><span>d) Dimensions</span></label></li>
+    <li><label><input type="checkbox" data-c="dHJ1ZQ=="><span>e) Tipus d'esforç a què està sotmès</span></label></li>
+    <li><label><input type="checkbox" data-c="ZmFsc2U="><span>f) Textura</span></label></li>
+  </ul>
+
+  <div class="accions">
+    <button type="button" data-accio="comprova">Comprova</button>
+    <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+    <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+    <span class="veredicte" aria-live="polite"></span>
+  </div>
+
+  <div class="solucio" hidden data-sol="PGgzPlNvbHVjacOzPC9oMz4KICAgIDxwPkVscyBmYWN0b3JzIGNvcnJlY3RlcyBzw7NuIGVsIHRpcHVzIGRlIG1hdGVyaWFsLCBsYSBmb3JtYSwgbGVzIGRpbWVuc2lvbnMgaSBlbCB0aXB1cyBkJ2VzZm9yw6cuIEVsIGNvbG9yIGkgbGEgdGV4dHVyYSBubyBoaSB0ZW5lbiByZXMgYSB2ZXVyZTogdW5hIGJpZ2EgcGludGFkYSBkZSByb3NhIGFndWFudGEgZXhhY3RhbWVudCBlbCBtYXRlaXguPC9wPg=="></div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="activitat" data-activitat="a4">
+  <h2><em>4</em> Una frase per a cada esforç</h2>
+  <p class="consigna">Relaciona cada frase amb l'esforç que descriu.</p>
+
+  <ul class="respostes">
+    <li><span class="lletra">a</span><span class="enunciat">Esforç que tendeix a estirar o allargar un cos.</span>
+      <select data-c="VHJhY2Npw7M=" aria-label="Esforç de la frase a"></select></li>
+    <li><span class="lletra">b</span><span class="enunciat">Esforç en què les forces que actuen tendeixen a corbar el cos.</span>
+      <select data-c="RmxleGnDsw==" aria-label="Esforç de la frase b"></select></li>
+    <li><span class="lletra">c</span><span class="enunciat">Aquest tipus d'esforç es dona, per exemple, en alicates de tall.</span>
+      <select data-c="Q2lzYWxsYW1lbnQ=" aria-label="Esforç de la frase c"></select></li>
+    <li><span class="lletra">d</span><span class="enunciat">Quan collem un cargol es produeix aquest esforç.</span>
+      <select data-c="VG9yc2nDsw==" aria-label="Esforç de la frase d"></select></li>
+    <li><span class="lletra">e</span><span class="enunciat">Els pilars i les columnes dels edificis estan sotmesos a aquest esforç.</span>
+      <select data-c="Q29tcHJlc3Npw7M=" aria-label="Esforç de la frase e"></select></li>
+  </ul>
+
+  <div class="accions">
+    <button type="button" data-accio="comprova">Comprova</button>
+    <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+    <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+    <span class="veredicte" aria-live="polite"></span>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="activitat" data-activitat="a5">
+  <h2><em>5</em> Deu objectes, deu esforços</h2>
+  <p class="consigna">Digues l'esforç principal al qual està sotmès cadascun d'aquests objectes. Pensa en com s'utilitzen, no en com són.</p>
+
+  <div class="taula-embolcall">
+    <table>
+      <thead>
+        <tr><th scope="col">Objecte</th><th scope="col">Tipus d'esforç</th><th scope="col">Objecte</th><th scope="col">Tipus d'esforç</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="objecte">Cadena de bicicleta</td>
+          <td class="tria"><select data-c="VHJhY2Npw7M=" aria-label="Esforç de la cadena de bicicleta"></select></td>
+          <td class="objecte">Seient d'una moto</td>
+          <td class="tria"><select data-c="Q29tcHJlc3Npw7M=" aria-label="Esforç del seient d'una moto"></select></td>
+        </tr>
+        <tr>
+          <td class="objecte">Eix de la maneta d'una porta</td>
+          <td class="tria"><select data-c="VG9yc2nDsw==" aria-label="Esforç de l'eix de la maneta"></select></td>
+          <td class="objecte">Canya de pescar</td>
+          <td class="tria"><select data-c="RmxleGnDsw==" aria-label="Esforç de la canya de pescar"></select></td>
+        </tr>
+        <tr>
+          <td class="objecte">Cable que sosté la cabina d'un ascensor</td>
+          <td class="tria"><select data-c="VHJhY2Npw7M=" aria-label="Esforç del cable de l'ascensor"></select></td>
+          <td class="objecte">Eix del manillar d'una bicicleta</td>
+          <td class="tria"><select data-c="VG9yc2nDsw==" aria-label="Esforç de l'eix del manillar"></select></td>
+        </tr>
+        <tr>
+          <td class="objecte">Cadira</td>
+          <td class="tria"><select data-c="Q29tcHJlc3Npw7M=" aria-label="Esforç de la cadira"></select></td>
+          <td class="objecte">Guillotina</td>
+          <td class="tria"><select data-c="Q2lzYWxsYW1lbnQ=" aria-label="Esforç de la guillotina"></select></td>
+        </tr>
+        <tr>
+          <td class="objecte">Arc de fletxes</td>
+          <td class="tria"><select data-c="RmxleGnDsw==" aria-label="Esforç de l'arc de fletxes"></select></td>
+          <td class="objecte">Tisores</td>
+          <td class="tria"><select data-c="Q2lzYWxsYW1lbnQ=" aria-label="Esforç de les tisores"></select></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="accions">
+    <button type="button" data-accio="comprova">Comprova</button>
+    <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+    <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+    <span class="veredicte" aria-live="polite"></span>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="activitat" data-activitat="a6">
+  <h2><em>6</em> El gronxador</h2>
+  <p class="consigna">Identifica l'esforç principal que suporta cada element numerat del gronxador. Després prem <strong>Mostra les forces</strong> i comprova si les fletxes coincideixen amb el que havies pensat.</p>
+
+  <div class="gronxador">
+    <div>
+      <svg viewBox="0 0 420 300" role="img" aria-label="Gronxador amb quatre elements numerats: travesser superior, cadenes, seient i muntants">
+        <!-- terra -->
+        <line x1="10" y1="272" x2="410" y2="272" stroke="#b9c6cb" stroke-width="3"/>
+
+        <!-- muntants -->
+        <g stroke="#7d8f96" stroke-width="9" stroke-linecap="round">
+          <line x1="75" y1="62" x2="42" y2="270"/>
+          <line x1="75" y1="62" x2="112" y2="270"/>
+          <line x1="345" y1="62" x2="308" y2="270"/>
+          <line x1="345" y1="62" x2="378" y2="270"/>
+        </g>
+
+        <!-- travesser -->
+        <rect x="62" y="54" width="296" height="14" rx="4" fill="#9aabb2"/>
+
+        <!-- cadenes -->
+        <g stroke="#7d8f96" stroke-width="5" stroke-linecap="round" stroke-dasharray="9 5">
+          <line x1="180" y1="68" x2="180" y2="192"/>
+          <line x1="240" y1="68" x2="240" y2="192"/>
+        </g>
+
+        <!-- seient -->
+        <rect x="158" y="190" width="104" height="13" rx="3" fill="#9aabb2"/>
+
+        <!-- forces (ocultes per defecte) -->
+        <g id="forces" style="display:none">
+          <!-- 1 travesser: flexió -->
+          <path d="M120 78 Q210 100 300 78" fill="none" stroke="#1c7f58" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <path d="M180 30 V50 M174 44 L180 52 L186 44" fill="none" stroke="#1c7f58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M240 30 V50 M234 44 L240 52 L246 44" fill="none" stroke="#1c7f58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 2 cadenes: tracció -->
+          <path d="M156 120 V88 M150 96 L156 86 L162 96" fill="none" stroke="#1d6fb8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M156 148 V178 M150 170 L156 180 L162 170" fill="none" stroke="#1d6fb8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M264 120 V88 M258 96 L264 86 L270 96" fill="none" stroke="#1d6fb8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M264 148 V178 M258 170 L264 180 L270 170" fill="none" stroke="#1d6fb8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 3 seient: flexió -->
+          <path d="M210 160 V182 M204 176 L210 184 L216 176" fill="none" stroke="#1c7f58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M166 212 Q210 230 254 212" fill="none" stroke="#1c7f58" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <!-- 4 muntants: compressió -->
+          <path d="M86 96 L94 140 M86 132 L95 144 L97 130" fill="none" stroke="#b8352a" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M112 240 L104 200 M112 212 L103 196 L100 210" fill="none" stroke="#b8352a" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- números -->
+        <g font-family="Space Grotesk, sans-serif" font-size="15" font-weight="700" fill="#15242b">
+          <circle cx="210" cy="61" r="13" fill="#ffffff" stroke="#15242b" stroke-width="1.5"/><text x="210" y="66" text-anchor="middle">1</text>
+          <circle cx="207" cy="130" r="13" fill="#ffffff" stroke="#15242b" stroke-width="1.5"/><text x="207" y="135" text-anchor="middle">2</text>
+          <circle cx="210" cy="222" r="13" fill="#ffffff" stroke="#15242b" stroke-width="1.5"/><text x="210" y="227" text-anchor="middle">3</text>
+          <circle cx="75" cy="170" r="13" fill="#ffffff" stroke="#15242b" stroke-width="1.5"/><text x="75" y="175" text-anchor="middle">4</text>
+        </g>
+      </svg>
+      <div class="accions" style="margin-top:.7rem">
+        <button type="button" class="secundari" id="btn-forces" aria-pressed="false">Mostra les forces</button>
+      </div>
+    </div>
+
+    <div>
+      <ul class="respostes" style="grid-template-columns:1fr">
+        <li style="grid-template-columns:1.6rem 1fr"><span class="lletra">1</span><span class="enunciat">Travesser superior</span>
+          <select data-c="RmxleGnDsw==" aria-label="Esforç del travesser superior" style="grid-column:1/-1"></select></li>
+        <li style="grid-template-columns:1.6rem 1fr"><span class="lletra">2</span><span class="enunciat">Cadenes</span>
+          <select data-c="VHJhY2Npw7M=" aria-label="Esforç de les cadenes" style="grid-column:1/-1"></select></li>
+        <li style="grid-template-columns:1.6rem 1fr"><span class="lletra">3</span><span class="enunciat">Seient</span>
+          <select data-c="RmxleGnDsw==" aria-label="Esforç del seient" style="grid-column:1/-1"></select></li>
+        <li style="grid-template-columns:1.6rem 1fr"><span class="lletra">4</span><span class="enunciat">Muntants laterals</span>
+          <select data-c="Q29tcHJlc3Npw7M=" aria-label="Esforç dels muntants" style="grid-column:1/-1"></select></li>
+      </ul>
+
+      <div class="accions">
+        <button type="button" data-accio="comprova">Comprova</button>
+        <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+        <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+        <span class="veredicte" aria-live="polite"></span>
+      </div>
+
+      <div class="solucio" hidden data-sol="PGgzPlNvbHVjacOzPC9oMz4KICAgICAgICA8dWw+CiAgICAgICAgICA8bGk+MSDCtyBUcmF2ZXNzZXIgc3VwZXJpb3I6IDxzdHJvbmc+ZmxleGnDszwvc3Ryb25nPi4gTGVzIGNhZGVuZXMgaGkgcGVuZ2VuIGkgZWwgZmFuIGNvcmJhciBjYXAgYXZhbGwuPC9saT4KICAgICAgICAgIDxsaT4yIMK3IENhZGVuZXM6IDxzdHJvbmc+dHJhY2Npw7M8L3N0cm9uZz4uIEVsIHBlcyBlc3RpcmEgY2FkYSBiYXVsYSBjYXAgYXZhbGwgaSBlbCB0cmF2ZXNzZXIgbGEgcmV0w6kgY2FwIGFtdW50LjwvbGk+CiAgICAgICAgICA8bGk+MyDCtyBTZWllbnQ6IDxzdHJvbmc+ZmxleGnDszwvc3Ryb25nPi4gRXN0w6AgcmVjb2x6YXQgcGVscyBleHRyZW1zIGkgY2FycmVnYXQgcGVsIG1pZy48L2xpPgogICAgICAgICAgPGxpPjQgwrcgTXVudGFudHM6IDxzdHJvbmc+Y29tcHJlc3Npw7M8L3N0cm9uZz4uIFRyYW5zbWV0ZW4gdG90IGVsIHBlcyBjYXAgYWwgdGVycmEgaSB0ZW5kZWl4ZW4gYSBlc2N1csOnYXItc2UuPC9saT4KICAgICAgICA8L3VsPg=="></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="entrega">
+  <div class="entrega-caixa">
+    <h2>Entrega la fitxa</h2>
+    <p>Quan hagis comprovat totes les activitats, escriu el teu nom i grup a dalt i prem el botó. S'envia directament al professor; no cal pujar res al Classroom.</p>
+    <button type="button" id="btn-entrega">Entrega la fitxa</button>
+    <p class="estat-entrega" id="estat-entrega" aria-live="polite"></p>
+  </div>
+</section>
+
+<footer>
+  <p>Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és un vici»</p>
+</footer>
+<script src="../assets/motor-fitxa.js"></script>
+<script>
+// ⚠️ Enganxa aquí l'URL que et dona l'Apps Script en desplegar-lo com a aplicació web.
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXcgmuqEghVayqajZL-sYY8dNcPXuKbjXQNXoA90HjE0QE2t3mq_EcvKa7Gk40RCBxBA/exec";
+
+FitxaEngine.init({
+  scriptUrl: SCRIPT_URL,
+  // ⚙️ Mentre sigui false, el botó "Mostra la solució" no existeix enlloc de
+  // la pàgina. Quan vulguis alliberar les solucions, canvia'l a true.
+  ambSolucions: false,
+  opcions: ["Tracció", "Compressió", "Flexió", "Torsió", "Cisallament"],
+  titols: {
+    a11: "1.1 Cada objecte",
+    a12: "1.2 Resistència",
+    a4: "4 Frases",
+    a5: "5 Deu objectes",
+    a6: "6 Gronxador"
+  }
+});
+
+// codi propi d'aquesta pàgina: el toggle de fletxes del gronxador (activitat 6)
+const btnForces = document.getElementById("btn-forces");
+if (btnForces) {
+  btnForces.addEventListener("click", () => {
+    const g = document.getElementById("forces");
+    const visible = g.style.display !== "none";
+    g.style.display = visible ? "none" : "block";
+    btnForces.setAttribute("aria-pressed", String(!visible));
+    btnForces.textContent = visible ? "Mostra les forces" : "Amaga les forces";
+  });
+}
+</script>
+</body>
+</html>
