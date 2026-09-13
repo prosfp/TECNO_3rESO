@@ -28,8 +28,14 @@ eines/
    i, quan la fitxa estigui acabada, fes servir `eines/codifica-respostes.py`
    per convertir-les automàticament a `data-c` en base64.
 4. Al final de la pàgina, actualitza la crida a `FitxaEngine.init({...})`:
-   - `scriptUrl`: la URL del teu Apps Script (pot ser la mateixa de sempre, o
-     una altra si vols un full de càlcul separat per sessió).
+   - `scriptUrl`: la URL del teu Apps Script. **És la mateixa per a totes les
+     sessions** — no cal crear un full de càlcul nou cada vegada.
+   - `activitat`: un nom curt i únic per aquesta sessió (per exemple
+     `"S2 El nom que toqui"`). És el nom de la pestanya que es crearà sola
+     al full de càlcul la primera vegada que algú entregui aquesta fitxa.
+     Si poses el mateix nom que ja existeix en una altra sessió, les
+     entregues es barrejaran a la mateixa pestanya — assegura't que sigui
+     diferent per cada una.
    - `ambSolucions`: `false` mentre els alumnes hi treballen.
    - `opcions`: la llista de respostes possibles per als desplegables d'aquesta
      sessió (no cal que sigui la mateixa que la S1).

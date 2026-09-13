@@ -6,10 +6,17 @@
  *
  *   FitxaEngine.init({
  *     scriptUrl: "https://script.google.com/macros/s/.../exec",
+ *     activitat: "S1 Forces i esforços",
  *     ambSolucions: false,
  *     opcions: ["Tracció","Compressió","Flexió","Torsió","Cisallament"],
  *     titols: {a11:"1.1 ...", a12:"1.2 ...", ...}
  *   });
+ *
+ * "activitat" dona nom a la pestanya del full de càlcul on aniran les
+ * entregues d'aquesta sessió: si no existeix, es crea sola la primera
+ * vegada que algú entrega la fitxa. Totes les sessions poden compartir el
+ * mateix full de càlcul i el mateix SCRIPT_URL; només cal canviar aquest
+ * nom a cada pàgina nova.
  *
  * Requereix, a l'HTML de cada activitat, la mateixa estructura que ja fem
  * servir: .activitat[data-activitat], select[data-c] / input[data-c] amb la
@@ -29,6 +36,7 @@ const FitxaEngine = (function () {
   function init(config) {
     const {
       scriptUrl,
+      activitat = "Respostes",
       ambSolucions = false,
       opcions = [],
       titols = {}
@@ -195,6 +203,7 @@ const FitxaEngine = (function () {
         estatEntrega.className = "estat-entrega enviant";
 
         const dades = new URLSearchParams({
+          sessio: activitat,
           nom, grup,
           encerts: totalEncerts,
           total: totalPreguntes,
