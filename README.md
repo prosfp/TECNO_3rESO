@@ -44,6 +44,34 @@ eines/
 5. Afegeix l'enllaç a la sessió nova dins `index.html` (l'arrel del repositori).
 6. Puja els canvis (commit + push). GitHub Pages es reconstrueix sola.
 
+## Solucions per al professorat
+
+Cada sessió porta `ambSolucions: false` per defecte: el botó "Mostra la
+solució" no existeix enlloc de la pàgina que veu l'alumnat, perquè primer
+raonin i ho intentin ells sols.
+
+Quan calgui consultar les solucions (per repassar a classe, per exemple),
+cada sessió té una còpia bessona no enllaçada des de l'`index.html` públic:
+
+```
+s1-forces-esforcos/
+  index.html       ← la que veu l'alumnat (ambSolucions: false)
+  solucions.html   ← còpia amb ambSolucions: true, només per al professorat
+```
+
+`solucions.html` no té els camps d'identificació ni el botó d'entrega (no té
+sentit "entregar" res des d'aquí). Segueix el mateix patró quan facis una
+sessió nova: duplica `index.html` a `solucions.html`, posa `ambSolucions:
+true` i treu les seccions `identificacio` i `entrega`.
+
+⚠️ **Important**: GitHub Pages publica tot el que hi ha al repositori. Que
+`solucions.html` no estigui enllaçat des de l'índex no el fa privat: qui
+tingui la URL directa (`.../s1-forces-esforcos/solucions.html`) hi pot
+entrar igualment. És prou per evitar que un alumne hi arribi fent clic, però
+no per amagar-lo de debò. Si algun dia cal que sigui realment privat, caldria
+un repositori privat (Pages amb repo privat requereix GitHub Pro/Team/Enterprise)
+o protegir-lo fora de GitHub Pages.
+
 ## Codifica-respostes.py
 
 Petita eina perquè no hagis d'amagar les respostes a mà. Li passes un fitxer

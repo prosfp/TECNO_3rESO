@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>S1 · Forces, esforços — Activitats</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <title>S1 · Forces, esforços — Solucions (professorat)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,6 +14,13 @@
     <link rel="stylesheet" href="../assets/estil.css" />
   </head>
   <body>
+    <div
+      style="background:var(--ko);color:#fff;text-align:center;padding:.6rem 1rem;font-family:var(--display);font-weight:500;font-size:.85rem;"
+    >
+      ⚠️ Versió amb solucions, només per al professorat — no la comparteixis
+      amb l'alumnat. No està enllaçada des de la web pública.
+    </div>
+
     <div class="barra">
       <div class="barra-int">
         <span class="xip"
@@ -41,29 +49,6 @@
         diuen tot.
       </p>
     </header>
-
-    <section class="identificacio">
-      <div class="id-caixa">
-        <div class="id-camp">
-          <label for="camp-nom">Nom i cognoms</label>
-          <input
-            type="text"
-            id="camp-nom"
-            autocomplete="name"
-            placeholder="Escriu el teu nom"
-          />
-        </div>
-        <div class="id-camp">
-          <label for="camp-grup">Grup</label>
-          <select id="camp-grup">
-            <option value="">Tria el grup…</option>
-            <option value="3r ESO A">3r ESO A</option>
-            <option value="3r ESO B">3r ESO B</option>
-            <option value="3r ESO C">3r ESO C</option>
-          </select>
-        </div>
-      </div>
-    </section>
 
     <section class="mostrari" aria-label="Els cinc tipus d'esforç">
       <div class="esforc" style="--c: var(--traccio)">
@@ -846,37 +831,18 @@
       </section>
     </main>
 
-    <section class="entrega">
-      <div class="entrega-caixa">
-        <h2>Entrega la fitxa</h2>
-        <p>
-          Quan hagis comprovat totes les activitats, escriu el teu nom i grup a
-          dalt i prem el botó. S'envia directament al professor; no cal pujar
-          res al Classroom.
-        </p>
-        <button type="button" id="btn-entrega">Entrega la fitxa</button>
-        <p class="estat-entrega" id="estat-entrega" aria-live="polite"></p>
-      </div>
-    </section>
-
     <footer>
       <p>
         Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és
-        un vici»
+        un vici» · Còpia amb solucions, ús intern del professorat
       </p>
     </footer>
     <script src="../assets/motor-fitxa.js"></script>
     <script>
-      // ⚠️ Enganxa aquí l'URL que et dona l'Apps Script en desplegar-lo com a aplicació web.
-      const SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbxXcgmuqEghVayqajZL-sYY8dNcPXuKbjXQNXoA90HjE0QE2t3mq_EcvKa7Gk40RCBxBA/exec";
-
       FitxaEngine.init({
-        scriptUrl: SCRIPT_URL,
-        activitat: "S1 Forces i esforços",
-        // ⚙️ Mentre sigui false, el botó "Mostra la solució" no existeix enlloc de
-        // la pàgina. Quan vulguis alliberar les solucions, canvia'l a true.
-        ambSolucions: false,
+        // ⚙️ Còpia només per al professorat: mostra les solucions i no envia
+        // res al full de càlcul (no hi ha botó d'entrega en aquesta versió).
+        ambSolucions: true,
         opcions: ["Tracció", "Compressió", "Flexió", "Torsió", "Cisallament"],
         titols: {
           a11: "1.1 Cada objecte",
