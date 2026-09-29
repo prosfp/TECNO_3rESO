@@ -32,6 +32,11 @@
  * un .veredicte, i opcionalment un .solucio[data-sol] i #marcador / #btn-entrega
  * / #camp-nom / #camp-grup / #estat-entrega per a la identificació i l'entrega.
  *
+ * Si un select necessita una llista de respostes diferent de la resta de la
+ * pàgina (per exemple, un bloc sobre elements i un altre sobre tipus), afegeix-hi
+ * data-opcions="A|B|C" (separades per "|"); si no hi és, fa servir la llista
+ * global d'"opcions" com sempre.
+ *
  * Qualsevol widget propi d'una activitat concreta (com el gronxador de la S1)
  * es queda com a codi a part, a la mateixa pàgina, fora d'aquest motor.
  */
@@ -75,10 +80,13 @@ const FitxaEngine = (function () {
       document.querySelectorAll('button[data-accio="neteja"]').forEach(b => { b.hidden = true; });
     }
 
-    // 3) omple tots els desplegables amb les opcions d'aquesta fitxa
+    // 3) omple tots els desplegables amb les opcions d'aquesta fitxa —o amb
+    //    les seves pròpies, si el select porta data-opcions="A|B|C" (útil
+    //    quan una mateixa pàgina té blocs amb llistes de respostes diferents)
     document.querySelectorAll("select[data-c]").forEach(sel => {
+      const propies = sel.dataset.opcions ? sel.dataset.opcions.split("|") : opcions;
       sel.insertAdjacentHTML("beforeend", '<option value="">Tria…</option>');
-      opcions.forEach(o => sel.insertAdjacentHTML("beforeend", `<option value="${o}">${o}</option>`));
+      propies.forEach(o => sel.insertAdjacentHTML("beforeend", `<option value="${o}">${o}</option>`));
       sel.addEventListener("change", () => sel.classList.remove("ok", "ko"));
     });
 

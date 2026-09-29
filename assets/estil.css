@@ -118,6 +118,9 @@ main{max-width:900px;margin:0 auto;padding:1rem 1.25rem 5rem}
 }
 .lletra{font-family:var(--display);font-weight:700;color:var(--steel)}
 .enunciat{font-size:.97rem}
+/* fila amb una foto en lloc de la lletra (p. ex. identificar tipus d'estructura) */
+.respostes li.amb-imatge{grid-template-columns:11rem 1fr minmax(11rem,13rem)}
+.respostes li.amb-imatge .figura{margin:0}
 
 select{
   font-family:var(--text);font-size:.95rem;color:var(--ink);
@@ -232,6 +235,7 @@ footer{
   .mostrari{grid-template-columns:repeat(2,1fr)}
   .respostes li{grid-template-columns:1.4rem 1fr;gap:.3rem .5rem}
   .respostes li select{grid-column:2}
+  .respostes li.amb-imatge{grid-template-columns:8rem 1fr}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}

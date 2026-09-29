@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>S2 · Estructures — Activitats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/estil.css" />
+    <style>
+      /* codi propi d'aquesta pàgina: activitat de resposta escrita (3), amb
+         el mateix aspecte que les .activitat però fora del motor de correcció */
+      .activitat-escrita {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        margin-top: 2rem;
+        padding: 1.6rem 1.5rem 1.4rem;
+      }
+      .activitat-escrita > h2 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin: 0 0 0.2rem;
+        display: flex;
+        gap: 0.6rem;
+        align-items: baseline;
+      }
+      .activitat-escrita > h2 em {
+        font-style: normal;
+        color: var(--steel);
+        font-weight: 500;
+        font-size: 1rem;
+        flex: 0 0 auto;
+      }
+      .exemple-resolt {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--ink-soft);
+      }
+      .raonament {
+        max-width: 900px;
+        margin: 2rem auto 0;
+        padding: 0 1.25rem;
+      }
+      .raonament .capsa {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        padding: 1.4rem 1.5rem;
+      }
+      .raonament h2 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 1.15rem;
+        margin: 0 0 0.3rem;
+      }
+      .raonament p.consigna {
+        margin: 0.2rem 0 1rem;
+        color: var(--ink-soft);
+      }
+      .raonament label,
+      .activitat-escrita label {
+        display: block;
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin: 0 0 0.3rem;
+      }
+      .raonament textarea,
+      .activitat-escrita textarea {
+        font-family: var(--text);
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #f4f7f8;
+        border: 1px solid var(--rule);
+        padding: 0.55rem 0.6rem;
+        width: 100%;
+        border-radius: 0;
+        resize: vertical;
+      }
+      .raonament .pregunta,
+      .activitat-escrita .pregunta {
+        margin-bottom: 1.1rem;
+      }
+      .raonament .compt,
+      .activitat-escrita .compt {
+        font-size: 0.78rem;
+        color: var(--ink-soft);
+        text-align: right;
+        display: block;
+        margin-top: 0.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="barra">
+      <div class="barra-int">
+        <span class="xip"
+          ><i style="background: var(--compressio)"></i>Compressió</span
+        >
+        <span class="xip"
+          ><i style="background: var(--traccio)"></i>Tracció</span
+        >
+        <span class="xip"><i style="background: var(--flexio)"></i>Flexió</span>
+        <span class="marcador" id="marcador" aria-live="polite"
+          >0 de 6 activitats resoltes</span
+        >
+      </div>
+    </div>
+
+    <header class="portada">
+      <p class="sessio">Sessió 2 · Tecnologia i Digitalització · 3r ESO</p>
+      <h1>Elements, propietats i tipus d'estructures</h1>
+      <p class="entradeta">
+        A la sessió 1 vam veure els esforços. Avui toca veure on actuen dins
+        d'una estructura, quines propietats ha de complir, i com les
+        classifiquem.
+      </p>
+    </header>
+
+    <section class="identificacio">
+      <div class="id-caixa">
+        <div class="id-camp">
+          <label for="camp-nom">Nom i cognoms</label>
+          <input
+            type="text"
+            id="camp-nom"
+            autocomplete="name"
+            placeholder="Escriu el teu nom"
+          />
+        </div>
+        <div class="id-camp">
+          <label for="camp-grup">Grup</label>
+          <select id="camp-grup">
+            <option value="">Tria el grup…</option>
+            <option value="3r ESO A">3r ESO A</option>
+            <option value="3r ESO B">3r ESO B</option>
+            <option value="3r ESO C">3r ESO C</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <!-- ============ 1 ============ -->
+      <section class="activitat" data-activitat="a1">
+        <h2><em>1</em> Elements d'una estructura</h2>
+        <p class="consigna">
+          Relaciona cada descripció amb l'element que li correspon.
+        </p>
+
+        <figure class="figura">
+          <img
+            src="imatges/elements.png"
+            alt="Tres elements d'una estructura etiquetats a), b) i c)"
+            onerror="
+              this.insertAdjacentHTML(
+                'afterend',
+                '&lt;div class=\'falta-imatge\'&gt;Falta la imatge de l\'activitat. Desa-la com a &lt;code&gt;imatges/elements.png&lt;/code&gt; al costat d\'aquest fitxer, o canvia el &lt;code&gt;src&lt;/code&gt; d\'aquesta etiqueta &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; per l\'adreça on la tinguis penjada.&lt;/div&gt;',
+              );
+              this.remove();
+            "
+          />
+        </figure>
+
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span
+            ><span class="enunciat"
+              >La part que reparteix el pes de l'edifici cap al terra</span
+            >
+            <select
+              data-c="Rm9uYW1lbnRz"
+              data-opcions="Fonaments|Pilars|Bigues|Tirants|Arcs|Perfils"
+              aria-label="Element a"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">b</span
+            ><span class="enunciat"
+              >Cable que estira des de dalt d'un pilar cap al tauler d'un
+              pont</span
+            >
+            <select
+              data-c="VGlyYW50cw=="
+              data-opcions="Fonaments|Pilars|Bigues|Tirants|Arcs|Perfils"
+              aria-label="Element b"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">c</span
+            ><span class="enunciat"
+              >Forma corba que cobreix un espai i reparteix l'esforç cap als
+              laterals</span
+            >
+            <select
+              data-c="QXJjcw=="
+              data-opcions="Fonaments|Pilars|Bigues|Tirants|Arcs|Perfils"
+              aria-label="Element c"
+            ></select>
+          </li>
+        </ul>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ 2 ============ -->
+      <section class="activitat" data-activitat="a2">
+        <h2><em>2</em> Cada element, un esforç</h2>
+        <p class="consigna">
+          Quin esforç pateix principalment cada element en aquesta situació?
+        </p>
+
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span
+            ><span class="enunciat">Un pilar que aguanta un pes de dalt</span>
+            <select
+              data-c="Q29tcHJlc3Npw7M="
+              aria-label="Esforç del pilar"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">b</span
+            ><span class="enunciat">Una biga amb algú caminant-hi a sobre</span>
+            <select
+              data-c="RmxleGnDsw=="
+              aria-label="Esforç de la biga"
+            ></select>
+          </li>
+        </ul>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ 3 ============ -->
+      <!-- Resposta escrita: fora del motor de correcció — s'entrega amb els raonaments -->
+      <section class="activitat-escrita">
+        <h2><em>3</em> Anàlisi d'un pont</h2>
+        <p class="consigna">
+          Observa i analitza l'estructura de la figura. Respon amb les teves
+          paraules.
+        </p>
+
+        <figure class="figura">
+          <img
+            src="imatges/Pont_Esforços.png"
+            alt="Pont triangulat amb nusos A, B i D a baix, C i E a dalt, i un pes aplicat al mig de la barra CE"
+            onerror="
+              this.insertAdjacentHTML(
+                'afterend',
+                '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/Pont_Esforços.png&lt;/code&gt;&lt;/div&gt;',
+              );
+              this.remove();
+            "
+          />
+        </figure>
+
+        <div class="pregunta">
+          <label for="pont-a"><strong>a)</strong> Creus que és prou rígida? Justifica la resposta.</label>
+          <textarea
+            id="pont-a"
+            rows="3"
+            maxlength="300"
+            placeholder="Escriu la teva resposta…"
+          ></textarea>
+          <span class="compt" data-per="pont-a">0 / 300</span>
+        </div>
+        <div class="pregunta">
+          <label for="pont-b"><strong>b)</strong> Quin sistema s'ha aplicat per dotar-la de més rigidesa?</label>
+          <textarea
+            id="pont-b"
+            rows="3"
+            maxlength="300"
+            placeholder="Escriu la teva resposta…"
+          ></textarea>
+          <span class="compt" data-per="pont-b">0 / 300</span>
+        </div>
+        <div class="pregunta">
+          <label for="pont-c"><strong>c)</strong> Quins esforços suporta la barra <strong>CE</strong>?</label>
+          <textarea
+            id="pont-c"
+            rows="3"
+            maxlength="300"
+            placeholder="Escriu la teva resposta…"
+          ></textarea>
+          <span class="compt" data-per="pont-c">0 / 300</span>
+        </div>
+        <div class="pregunta">
+          <label for="pont-d"><strong>d)</strong> Quins esforços suporten les barres <strong>AB</strong> i <strong>BD</strong>?</label>
+          <textarea
+            id="pont-d"
+            rows="3"
+            maxlength="300"
+            placeholder="Escriu la teva resposta…"
+          ></textarea>
+          <span class="compt" data-per="pont-d">0 / 300</span>
+        </div>
+      </section>
+
+      <!-- ============ 4 ============ -->
+      <section class="activitat" data-activitat="a4">
+        <h2><em>4</em> Propietats</h2>
+        <p class="consigna">Quina propietat li falta a cada estructura?</p>
+
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span
+            ><span class="enunciat"
+              >Una cadira de tres potes es belluga i acaba bolcant</span
+            >
+            <select
+              data-c="RXN0YWJpbGl0YXQ="
+              data-opcions="Estabilitat|Resistència|Rigidesa"
+              aria-label="Propietat a"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">b</span
+            ><span class="enunciat"
+              >Una prestatgeria es corba molt quan hi poses llibres, tot i no
+              trencar-se</span
+            >
+            <select
+              data-c="UmlnaWRlc2E="
+              data-opcions="Estabilitat|Resistència|Rigidesa"
+              aria-label="Propietat b"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">c</span
+            ><span class="enunciat"
+              >Un pont cedeix i es trenca amb el pes d'un camió</span
+            >
+            <select
+              data-c="UmVzaXN0w6huY2lh"
+              data-opcions="Estabilitat|Resistència|Rigidesa"
+              aria-label="Propietat c"
+            ></select>
+          </li>
+        </ul>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ 5 ============ -->
+      <section class="activitat" data-activitat="a5">
+        <h2><em>5</em> Tipus segons la conformació</h2>
+        <p class="consigna">De quin tipus és cada estructura de la foto?</p>
+
+        <ul class="respostes" style="grid-template-columns: 1fr">
+          <li class="amb-imatge">
+            <figure class="figura" style="margin: 0">
+              <img
+                src="imatges/tipus-massiva.png"
+                alt="Estructura massiva"
+                style="width: 100%"
+                onerror="
+                  this.insertAdjacentHTML(
+                    'afterend',
+                    '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/tipus-massiva.png&lt;/code&gt;&lt;/div&gt;',
+                  );
+                  this.remove();
+                "
+              />
+            </figure>
+            <span class="enunciat"></span>
+            <select
+              data-c="TWFzc2l2YQ=="
+              data-opcions="Massiva|Laminar|Tramada|Triangulada|Penjada|Pneumàtica"
+              aria-label="Tipus 1"
+            ></select>
+          </li>
+          <li class="amb-imatge">
+            <figure class="figura" style="margin: 0">
+              <img
+                src="imatges/tipus-laminar.png"
+                alt="Estructura laminar"
+                style="width: 100%"
+                onerror="
+                  this.insertAdjacentHTML(
+                    'afterend',
+                    '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/tipus-laminar.png&lt;/code&gt;&lt;/div&gt;',
+                  );
+                  this.remove();
+                "
+              />
+            </figure>
+            <span class="enunciat"></span>
+            <select
+              data-c="TGFtaW5hcg=="
+              data-opcions="Massiva|Laminar|Tramada|Triangulada|Penjada|Pneumàtica"
+              aria-label="Tipus 2"
+            ></select>
+          </li>
+          <li class="amb-imatge">
+            <figure class="figura" style="margin: 0">
+              <img
+                src="imatges/tipus-tramada.png"
+                alt="Estructura tramada"
+                style="width: 100%"
+                onerror="
+                  this.insertAdjacentHTML(
+                    'afterend',
+                    '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/tipus-tramada.png&lt;/code&gt;&lt;/div&gt;',
+                  );
+                  this.remove();
+                "
+              />
+            </figure>
+            <span class="enunciat"></span>
+            <select
+              data-c="VHJhbWFkYQ=="
+              data-opcions="Massiva|Laminar|Tramada|Triangulada|Penjada|Pneumàtica"
+              aria-label="Tipus 3"
+            ></select>
+          </li>
+          <li class="amb-imatge">
+            <figure class="figura" style="margin: 0">
+              <img
+                src="imatges/tipus-triangulada.png"
+                alt="Estructura triangulada"
+                style="width: 100%"
+                onerror="
+                  this.insertAdjacentHTML(
+                    'afterend',
+                    '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/tipus-triangulada.png&lt;/code&gt;&lt;/div&gt;',
+                  );
+                  this.remove();
+                "
+              />
+            </figure>
+            <span class="enunciat"></span>
+            <select
+              data-c="VHJpYW5ndWxhZGE="
+              data-opcions="Massiva|Laminar|Tramada|Triangulada|Penjada|Pneumàtica"
+              aria-label="Tipus 4"
+            ></select>
+          </li>
+          <li class="amb-imatge">
+            <figure class="figura" style="margin: 0">
+              <img
+                src="imatges/tipus-penjada.png"
+                alt="Estructura penjada"
+                style="width: 100%"
+                onerror="
+                  this.insertAdjacentHTML(
+                    'afterend',
+                    '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/tipus-penjada.png&lt;/code&gt;&lt;/div&gt;',
+                  );
+                  this.remove();
+                "
+              />
+            </figure>
+            <span class="enunciat"></span>
+            <select
+              data-c="UGVuamFkYQ=="
+              data-opcions="Massiva|Laminar|Tramada|Triangulada|Penjada|Pneumàtica"
+              aria-label="Tipus 5"
+            ></select>
+          </li>
+          <li class="amb-imatge">
+            <figure class="figura" style="margin: 0">
+              <img
+                src="imatges/tipus-pneumatica.png"
+                alt="Estructura pneumàtica"
+                style="width: 100%"
+                onerror="
+                  this.insertAdjacentHTML(
+                    'afterend',
+                    '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/tipus-pneumatica.png&lt;/code&gt;&lt;/div&gt;',
+                  );
+                  this.remove();
+                "
+              />
+            </figure>
+            <span class="enunciat"></span>
+            <select
+              data-c="UG5ldW3DoHRpY2E="
+              data-opcions="Massiva|Laminar|Tramada|Triangulada|Penjada|Pneumàtica"
+              aria-label="Tipus 6"
+            ></select>
+          </li>
+        </ul>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ 6 ============ -->
+      <section class="activitat" data-activitat="a6">
+        <h2><em>6</em> Cada estructura, el seu tipus</h2>
+        <p class="consigna">
+          Primer, mira l'exemple resolt. Després relaciona cada estructura amb
+          el tipus al qual pertany.
+        </p>
+
+        <figure class="figura">
+          <img
+            src="imatges/Exemples_Estructures.png"
+            alt="Exemples d'estructures: a) torre elèctrica, b) xassís d'un cotxe, c) piràmides, d) cúpula geodèsica"
+            onerror="
+              this.insertAdjacentHTML(
+                'afterend',
+                '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/Exemples_Estructures.png&lt;/code&gt;&lt;/div&gt;',
+              );
+              this.remove();
+            "
+          />
+          <figcaption class="exemple-resolt">
+            <strong>Exemple resolt:</strong> a) torre elèctrica →
+            <em>triangulada</em> · b) xassís d'un cotxe → <em>laminar</em> ·
+            c) piràmides → <em>massiva</em> · d) cúpula → <em>geodèsica</em>
+          </figcaption>
+        </figure>
+
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span
+            ><span class="enunciat">Carretó de supermercat</span>
+            <select
+              data-c="TGFtaW5hcg=="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus del carretó de supermercat"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">b</span
+            ><span class="enunciat">Edifici d'habitatges</span>
+            <select
+              data-c="VHJhbWFkYQ=="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus de l'edifici d'habitatges"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">c</span
+            ><span class="enunciat">Grua de construcció</span>
+            <select
+              data-c="VHJpYW5ndWxhZGE="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus de la grua de construcció"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">d</span
+            ><span class="enunciat">Pont amb tirants</span>
+            <select
+              data-c="UGVuamFkYQ=="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus del pont amb tirants"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">e</span
+            ><span class="enunciat">Piràmide</span>
+            <select
+              data-c="TWFzc2l2YQ=="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus de la piràmide"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">f</span
+            ><span class="enunciat">Aqüeducte romà</span>
+            <select
+              data-c="QXJjcywgdm9sdGVz"
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus de l'aqüeducte romà"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">g</span
+            ><span class="enunciat">Castell inflable</span>
+            <select
+              data-c="UG5ldW3DoHRpY2E="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus del castell inflable"
+            ></select>
+          </li>
+          <li>
+            <span class="lletra">h</span
+            ><span class="enunciat">Cúpula de vidre del Museu Dalí</span>
+            <select
+              data-c="R2VvZMOoc2ljYQ=="
+              data-opcions="Arcs, voltes|Geodèsica|Laminar|Massiva|Penjada|Pneumàtica|Tramada|Triangulada"
+              aria-label="Tipus de la cúpula del Museu Dalí"
+            ></select>
+          </li>
+        </ul>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ 7 ============ -->
+      <section class="activitat" data-activitat="a7">
+        <h2><em>7</em> Factors del disseny</h2>
+        <p class="consigna">
+          Quins són els tres factors principals que cal tenir en compte a
+          l'hora de dissenyar i construir una estructura? Marca'n tres.
+        </p>
+
+        <ul class="caselles">
+          <li>
+            <label
+              ><input type="checkbox" data-c="dHJ1ZQ==" /><span
+                >a) Estabilitat</span
+              ></label
+            >
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" data-c="ZmFsc2U=" /><span
+                >b) Color</span
+              ></label
+            >
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" data-c="dHJ1ZQ==" /><span
+                >c) Resistència</span
+              ></label
+            >
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" data-c="ZmFsc2U=" /><span
+                >d) Elasticitat</span
+              ></label
+            >
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" data-c="dHJ1ZQ==" /><span
+                >e) Rigidesa</span
+              ></label
+            >
+          </li>
+          <li>
+            <label
+              ><input type="checkbox" data-c="ZmFsc2U=" /><span
+                >f) Brillantor</span
+              ></label
+            >
+          </li>
+        </ul>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Raonament: fora del motor de correcció — s'entrega a part, a la seva pròpia pestanya -->
+    <section class="raonament">
+      <div class="capsa">
+        <h2>Raona-ho en una frase</h2>
+
+        <div class="pregunta">
+          <label for="raon-2"
+            >Si un pont només tingués tirants i cap pilar, què creus que
+            passaria?</label
+          >
+          <textarea
+            id="raon-2"
+            rows="2"
+            maxlength="180"
+            placeholder="Escriu-ho en una frase…"
+          ></textarea>
+          <span class="compt" data-per="raon-2">0 / 180</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="entrega">
+      <div class="entrega-caixa">
+        <h2>Entrega la fitxa</h2>
+        <p>
+          Quan hagis comprovat totes les activitats, escriu el teu nom i grup a
+          dalt i prem el botó. S'envia directament al professor; no cal pujar
+          res al Classroom.
+        </p>
+        <button type="button" id="btn-entrega">Entrega la fitxa</button>
+        <p class="estat-entrega" id="estat-entrega" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és
+        un vici»
+      </p>
+    </footer>
+    <script src="../assets/motor-fitxa.js"></script>
+    <script>
+      // ⚠️ Enganxa aquí l'URL que et dona l'Apps Script en desplegar-lo com a aplicació web.
+      // Pot ser exactament la mateixa que fas servir a S1 — és el mateix full de càlcul.
+      const SCRIPT_URL = "ENGANXA_AQUI_LA_MATEIXA_URL_DE_LA_S1";
+
+      FitxaEngine.init({
+        scriptUrl: SCRIPT_URL,
+        activitat: "S2 Estructures",
+        ambSolucions: false,
+        comprovaDespresEntrega: true,
+        opcions: ["Tracció", "Compressió", "Flexió"],
+        titols: {
+          a1: "1 Elements",
+          a2: "2 Elements i esforços",
+          a4: "4 Propietats",
+          a5: "5 Tipus",
+          a6: "6 Relació estructura-tipus",
+          a7: "7 Factors del disseny",
+        },
+      });
+
+      // codi propi: entrega separada de l'anàlisi del pont i el raonament (segona pestanya al mateix full)
+      const btnEntrega = document.getElementById("btn-entrega");
+      const estatEntrega = document.getElementById("estat-entrega");
+      if (btnEntrega) {
+        btnEntrega.addEventListener("click", () => {
+          const nom = document.getElementById("camp-nom").value.trim();
+          const grup = document.getElementById("camp-grup").value;
+          if (!nom || !grup) return; // el motor principal ja n'avisa
+          if (!SCRIPT_URL || SCRIPT_URL.includes("ENGANXA_AQUI")) return;
+
+          const dades = new URLSearchParams({
+            sessio: "S2 Estructures — Raonaments",
+            nom,
+            grup,
+            resposta_1: document.getElementById("pont-a").value.trim(),
+            resposta_2: document.getElementById("pont-b").value.trim(),
+            resposta_3: document.getElementById("pont-c").value.trim(),
+            resposta_4: document.getElementById("pont-d").value.trim(),
+            resposta_5: document.getElementById("raon-2").value.trim(),
+          });
+          fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: dades });
+        });
+      }
+
+      document.querySelectorAll(".compt[data-per]").forEach((c) => {
+        const t = document.getElementById(c.dataset.per);
+        t.addEventListener("input", () => {
+          c.textContent = t.value.length + " / " + t.maxLength;
+        });
+      });
+    </script>
+  </body>
+</html>
