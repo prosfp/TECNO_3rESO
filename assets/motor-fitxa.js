@@ -35,7 +35,10 @@
  * Si un select necessita una llista de respostes diferent de la resta de la
  * pàgina (per exemple, un bloc sobre elements i un altre sobre tipus), afegeix-hi
  * data-opcions="A|B|C" (separades per "|"); si no hi és, fa servir la llista
- * global d'"opcions" com sempre.
+ * global d'"opcions" com sempre. En qualsevol dels dos casos, l'ordre de les
+ * opcions dins el desplegable es barreja a l'atzar cada vegada que es carrega
+ * la pàgina (cada select de manera independent), perquè en exercicis amb una
+ * foto per select l'ordre de la llista no doni la resposta per la posició.
  *
  * Qualsevol widget propi d'una activitat concreta (com el gronxador de la S1)
  * es queda com a codi a part, a la mateixa pàgina, fora d'aquest motor.
@@ -44,6 +47,17 @@ const FitxaEngine = (function () {
 
   function decodeBase64Utf8(b64) {
     return decodeURIComponent(escape(atob(b64)));
+  }
+
+  // retorna una còpia de l'array amb l'ordre barrejat a l'atzar (Fisher–Yates);
+  // no toca l'original perquè sovint és la mateixa llista compartida per varis selects
+  function barreja(array) {
+    const copia = array.slice();
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
   }
 
   function init(config) {
@@ -82,9 +96,11 @@ const FitxaEngine = (function () {
 
     // 3) omple tots els desplegables amb les opcions d'aquesta fitxa —o amb
     //    les seves pròpies, si el select porta data-opcions="A|B|C" (útil
-    //    quan una mateixa pàgina té blocs amb llistes de respostes diferents)
+    //    quan una mateixa pàgina té blocs amb llistes de respostes diferents)—
+    //    en un ordre a l'atzar, independent per a cada select, perquè la
+    //    posició dins la llista no delati mai la resposta correcta.
     document.querySelectorAll("select[data-c]").forEach(sel => {
-      const propies = sel.dataset.opcions ? sel.dataset.opcions.split("|") : opcions;
+      const propies = barreja(sel.dataset.opcions ? sel.dataset.opcions.split("|") : opcions);
       sel.insertAdjacentHTML("beforeend", '<option value="">Tria…</option>');
       propies.forEach(o => sel.insertAdjacentHTML("beforeend", `<option value="${o}">${o}</option>`));
       sel.addEventListener("change", () => sel.classList.remove("ok", "ko"));
