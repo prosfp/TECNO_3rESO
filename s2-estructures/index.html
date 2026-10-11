@@ -93,6 +93,43 @@
         display: block;
         margin-top: 0.2rem;
       }
+      /* pont interactiu (activitat 3) */
+      .pont-fig svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: #f4f7f8;
+        border: 1px solid var(--rule);
+      }
+      .pont-fig .barra-pont {
+        stroke: #5b6b72;
+        stroke-width: 9;
+        stroke-linecap: round;
+        cursor: pointer;
+      }
+      .pont-fig .barra-pont:hover { stroke: var(--steel); }
+      .pont-fig .barra-pont.t { stroke: var(--traccio); }
+      .pont-fig .barra-pont.c { stroke: var(--compressio); }
+      .pont-fig .nus { fill: var(--ink); }
+      .pont-fig .etiq { font-family: var(--display); font-weight: 700; font-size: 20px; fill: var(--ink); }
+      .llegenda-pont {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 1.2rem;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        margin-top: 0.5rem;
+      }
+      .llegenda-pont i {
+        display: inline-block;
+        width: 0.9rem;
+        height: 0.35rem;
+        margin-right: 0.35rem;
+        vertical-align: middle;
+      }
+      .llegenda-pont .mostra-t { background: var(--traccio); }
+      .llegenda-pont .mostra-c { background: var(--compressio); }
+      .barres-pont .lletra { font-family: var(--display); font-weight: 700; }
     </style>
   </head>
   <body>
@@ -106,7 +143,7 @@
         >
         <span class="xip"><i style="background: var(--flexio)"></i>Flexió</span>
         <span class="marcador" id="marcador" aria-live="polite"
-          >0 de 6 activitats resoltes</span
+          >0 de 7 activitats resoltes</span
         >
       </div>
     </div>
@@ -255,78 +292,139 @@
       </section>
 
       <!-- ============ 3 ============ -->
+      <!-- Pont interactiu: els selects els corregeix el motor; el dibuix (SVG) és codi propi de la pàgina -->
+      <section class="activitat" data-activitat="a3">
+        <h2><em>3</em> Els esforços d'un pont</h2>
+        <p class="consigna">
+          Un cotxe travessa el pont pel tauler (la línia de baix, A–B–D). Fes
+          clic a cada barra, o tria-ho a la llista, per dir si
+          <strong>s'estira</strong> (tracció) o <strong>s'escurça</strong>
+          (compressió). Les fletxes del dibuix et mostren el que has triat.
+        </p>
+
+        <figure class="figura pont-fig">
+          <svg
+            id="pont"
+            viewBox="0 0 680 300"
+            role="img"
+            aria-label="Pont triangulat amb nusos A, B i D a baix, C i E a dalt, i un cotxe sobre el tauler al mig del pont"
+          >
+            <defs>
+              <marker id="fl-traccio" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--traccio)" />
+              </marker>
+              <marker id="fl-compressio" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--compressio)" />
+              </marker>
+            </defs>
+            <!-- riu i ribes -->
+            <rect x="0" y="246" width="680" height="54" fill="#cfe3ef" />
+            <rect x="0" y="236" width="90" height="64" fill="#9a7b5b" />
+            <rect x="590" y="236" width="90" height="64" fill="#9a7b5b" />
+            <!-- cotxe (darrere de les barres) -->
+            <g class="cotxe" transform="translate(262 179) scale(1.55)">
+              <rect x="0" y="12" width="100" height="22" rx="6" fill="#d9a441" />
+              <path d="M18 12 L32 0 L70 0 L84 12 z" fill="#e8c27a" />
+              <circle cx="24" cy="34" r="7" fill="#2b2b2b" />
+              <circle cx="76" cy="34" r="7" fill="#2b2b2b" />
+            </g>
+            <g id="barres"></g>
+            <g id="fletxes"></g>
+            <g id="nusos"></g>
+          </svg>
+          <figcaption class="llegenda-pont">
+            <span><i class="mostra-t"></i>Tracció: les fletxes estiren la barra cap enfora</span>
+            <span><i class="mostra-c"></i>Compressió: les fletxes empenyen la barra cap endins</span>
+          </figcaption>
+        </figure>
+
+        <ul class="respostes barres-pont">
+          <li>
+            <span class="lletra">AB</span><span class="enunciat">Barra de baix, a l'esquerra</span>
+            <select data-c="VHJhY2Npw7M=" data-opcions="Tracció|Compressió" data-barra="AB" aria-label="Esforç de la barra AB"></select>
+          </li>
+          <li>
+            <span class="lletra">BD</span><span class="enunciat">Barra de baix, a la dreta</span>
+            <select data-c="VHJhY2Npw7M=" data-opcions="Tracció|Compressió" data-barra="BD" aria-label="Esforç de la barra BD"></select>
+          </li>
+          <li>
+            <span class="lletra">CE</span><span class="enunciat">Barra de dalt</span>
+            <select data-c="Q29tcHJlc3Npw7M=" data-opcions="Tracció|Compressió" data-barra="CE" aria-label="Esforç de la barra CE"></select>
+          </li>
+          <li>
+            <span class="lletra">AC</span><span class="enunciat">Diagonal de l'extrem esquerre</span>
+            <select data-c="Q29tcHJlc3Npw7M=" data-opcions="Tracció|Compressió" data-barra="AC" aria-label="Esforç de la barra AC"></select>
+          </li>
+          <li>
+            <span class="lletra">ED</span><span class="enunciat">Diagonal de l'extrem dret</span>
+            <select data-c="Q29tcHJlc3Npw7M=" data-opcions="Tracció|Compressió" data-barra="ED" aria-label="Esforç de la barra ED"></select>
+          </li>
+          <li>
+            <span class="lletra">CB</span><span class="enunciat">Diagonal del mig, a l'esquerra</span>
+            <select data-c="VHJhY2Npw7M=" data-opcions="Tracció|Compressió" data-barra="CB" aria-label="Esforç de la barra CB"></select>
+          </li>
+          <li>
+            <span class="lletra">BE</span><span class="enunciat">Diagonal del mig, a la dreta</span>
+            <select data-c="VHJhY2Npw7M=" data-opcions="Tracció|Compressió" data-barra="BE" aria-label="Esforç de la barra BE"></select>
+          </li>
+        </ul>
+
+        <p class="exemple-resolt">
+          Pista: pensa en una regla que es corba quan hi recolzes un pes al mig.
+          Què li passa a la cara de dalt? I a la de baix?
+        </p>
+
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">
+            Mostra la solució
+          </button>
+          <button type="button" class="secundari" data-accio="neteja">
+            Torna-ho a provar
+          </button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
       <!-- Resposta escrita: fora del motor de correcció — s'entrega amb els raonaments -->
       <section class="activitat-escrita">
-        <h2><em>3</em> Anàlisi d'un pont</h2>
+        <h2><em>3b</em> Explica el pont</h2>
         <p class="consigna">
-          Observa i analitza l'estructura de la figura. Respon amb les teves
+          Torna a mirar el pont de l'activitat 3 i respon amb les teves
           paraules.
         </p>
 
-        <figure class="figura">
-          <img
-            src="imatges/Pont_Esforços.png"
-            alt="Pont triangulat amb nusos A, B i D a baix, C i E a dalt, i un pes aplicat al mig de la barra CE"
-            onerror="
-              this.insertAdjacentHTML(
-                'afterend',
-                '&lt;div class=\'falta-imatge\'&gt;Falta &lt;code&gt;imatges/Pont_Esforços.png&lt;/code&gt;&lt;/div&gt;',
-              );
-              this.remove();
-            "
-          />
-        </figure>
-
         <div class="pregunta">
           <label for="pont-a"
-            ><strong>a)</strong> Creus que és prou rígida? Justifica la
+            ><strong>a)</strong> Creus que és prou rígid? Justifica la
             resposta.</label
           >
-          <textarea
-            id="pont-a"
-            rows="3"
-            maxlength="300"
-            placeholder="Escriu la teva resposta…"
-          ></textarea>
+          <textarea id="pont-a" rows="3" maxlength="300" placeholder="Escriu la teva resposta…"></textarea>
           <span class="compt" data-per="pont-a">0 / 300</span>
         </div>
         <div class="pregunta">
           <label for="pont-b"
-            ><strong>b)</strong> Quin sistema s'ha aplicat per dotar-la de més
+            ><strong>b)</strong> Quin sistema s'ha aplicat per dotar-lo de més
             rigidesa?</label
           >
-          <textarea
-            id="pont-b"
-            rows="3"
-            maxlength="300"
-            placeholder="Escriu la teva resposta…"
-          ></textarea>
+          <textarea id="pont-b" rows="3" maxlength="300" placeholder="Escriu la teva resposta…"></textarea>
           <span class="compt" data-per="pont-b">0 / 300</span>
         </div>
         <div class="pregunta">
           <label for="pont-c"
-            ><strong>c)</strong> Quins esforços suporta la barra
-            <strong>CE</strong>?</label
+            ><strong>c)</strong> Per què creus que la barra de dalt (CE) i les
+            de baix (AB i BD) no pateixen el mateix esforç?</label
           >
-          <textarea
-            id="pont-c"
-            rows="3"
-            maxlength="300"
-            placeholder="Escriu la teva resposta…"
-          ></textarea>
+          <textarea id="pont-c" rows="3" maxlength="300" placeholder="Escriu la teva resposta…"></textarea>
           <span class="compt" data-per="pont-c">0 / 300</span>
         </div>
         <div class="pregunta">
           <label for="pont-d"
-            ><strong>d)</strong> Quins esforços suporten les barres
-            <strong>AB</strong> i <strong>BD</strong>?</label
+            ><strong>d)</strong> El cotxe trepitja directament les barres AB i
+            BD. A part de l'esforç que has marcat, quin altre esforç creus que
+            pateixen? Per què?</label
           >
-          <textarea
-            id="pont-d"
-            rows="3"
-            maxlength="300"
-            placeholder="Escriu la teva resposta…"
-          ></textarea>
+          <textarea id="pont-d" rows="3" maxlength="300" placeholder="Escriu la teva resposta…"></textarea>
           <span class="compt" data-per="pont-d">0 / 300</span>
         </div>
       </section>
@@ -772,12 +870,87 @@
         titols: {
           a1: "1 Elements",
           a2: "2 Elements i esforços",
+          a3: "3 Esforços del pont",
           a4: "4 Propietats",
           a5: "5 Tipus",
           a6: "6 Relació estructura-tipus",
           a7: "7 Factors del disseny",
         },
       });
+
+
+      // codi propi: dibuix del pont de l'activitat 3. Mostra a cada barra el que
+      // l'alumne ha triat al seu select (colors i fletxes). La correcció la fa el motor.
+      (function () {
+        const svg = document.getElementById("pont");
+        if (!svg) return;
+        const NS = "http://www.w3.org/2000/svg";
+        const nus = { A: [80, 236], B: [340, 236], D: [600, 236], C: [210, 86], E: [470, 86] };
+        const barres = ["AB", "BD", "CE", "AC", "ED", "CB", "BE"];
+        const gB = svg.querySelector("#barres"), gF = svg.querySelector("#fletxes"), gN = svg.querySelector("#nusos");
+        const sel = (b) => document.querySelector('select[data-barra="' + b + '"]');
+
+        barres.forEach((b) => {
+          const [x1, y1] = nus[b[0]], [x2, y2] = nus[b[1]];
+          const l = document.createElementNS(NS, "line");
+          Object.entries({ x1, y1, x2, y2, class: "barra-pont", "data-barra": b }).forEach(([k, v]) => l.setAttribute(k, v));
+          const t = document.createElementNS(NS, "title");
+          t.textContent = "Barra " + b;
+          l.appendChild(t);
+          l.addEventListener("click", () => {
+            // cicle: sense triar → Tracció → Compressió → sense triar
+            const s = sel(b);
+            s.value = s.value === "" ? "Tracció" : s.value === "Tracció" ? "Compressió" : "";
+            s.dispatchEvent(new Event("change"));
+          });
+          gB.appendChild(l);
+        });
+        Object.entries(nus).forEach(([n, [x, y]]) => {
+          const c = document.createElementNS(NS, "circle");
+          c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", 7); c.setAttribute("class", "nus");
+          gN.appendChild(c);
+          const t = document.createElementNS(NS, "text");
+          t.setAttribute("x", x + (n === "D" ? 10 : n === "B" ? -7 : -26));
+          t.setAttribute("y", n === "B" ? y + 34 : y - 14);
+          t.setAttribute("class", "etiq");
+          t.textContent = n;
+          gN.appendChild(t);
+        });
+
+        function fletxa(xa, ya, xb, yb, tipus) {
+          const l = document.createElementNS(NS, "line");
+          Object.entries({ x1: xa, y1: ya, x2: xb, y2: yb, stroke: "var(--" + tipus + ")", "stroke-width": 3,
+            "marker-end": "url(#fl-" + tipus + ")" }).forEach(([k, v]) => l.setAttribute(k, v));
+          gF.appendChild(l);
+        }
+
+        function dibuixa() {
+          gF.innerHTML = "";
+          barres.forEach((b) => {
+            const v = sel(b).value;
+            const linia = gB.querySelector('[data-barra="' + b + '"]');
+            linia.classList.toggle("t", v === "Tracció");
+            linia.classList.toggle("c", v === "Compressió");
+            if (!v) return;
+            const [x1, y1] = nus[b[0]], [x2, y2] = nus[b[1]];
+            const len = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / len, uy = (y2 - y1) / len;
+            // fletxes desplaçades a un costat de la barra perquè no la tapin
+            const ox = -uy * 16, oy = ux * 16;
+            const tipus = v === "Tracció" ? "traccio" : "compressio";
+            [[x1, y1, 1], [x2, y2, -1]].forEach(([x, y, s]) => {
+              const a = [x + ux * s * 30 + ox, y + uy * s * 30 + oy];
+              const c = [x + ux * s * 62 + ox, y + uy * s * 62 + oy];
+              // tracció: la fletxa apunta cap a l'extrem (estira); compressió: cap al centre (empeny)
+              if (tipus === "traccio") fletxa(c[0], c[1], a[0], a[1], tipus);
+              else fletxa(a[0], a[1], c[0], c[1], tipus);
+            });
+          });
+        }
+        barres.forEach((b) => sel(b).addEventListener("change", dibuixa));
+        document.querySelectorAll('.activitat[data-activitat="a3"] button').forEach((btn) =>
+          btn.addEventListener("click", () => setTimeout(dibuixa, 0)));
+        dibuixa();
+      })();
 
       // codi propi: entrega separada de l'anàlisi del pont i el raonament (segona pestanya al mateix full)
       const btnEntrega = document.getElementById("btn-entrega");
