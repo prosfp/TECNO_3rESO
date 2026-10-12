@@ -1,0 +1,86 @@
+/* Estils propis de les PROVES (s'afegeixen a estil.css; no el substitueixen) */
+
+.avis-prova{
+  max-width:900px;margin:1.2rem auto 0;padding:0 1.25rem;
+}
+.avis-prova ul{
+  margin:0;padding:.9rem 1.2rem .9rem 2.2rem;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--cisallament);
+  font-size:.93rem;color:var(--ink-soft);
+}
+.avis-prova li+li{margin-top:.2rem}
+
+.id-caixa.tres{grid-template-columns:1.4fr 1fr 1fr}
+@media(max-width:700px){.id-caixa.tres{grid-template-columns:1fr}}
+.id-inici{max-width:900px;margin:.9rem auto 0;padding:0 1.25rem}
+.resum-alumne{
+  max-width:900px;margin:1rem auto 0;padding:0 1.25rem;
+  font-family:var(--display);color:var(--steel);
+}
+
+.activitat > h2 .punts{
+  margin-left:auto;font-family:var(--display);font-weight:500;
+  font-size:.82rem;color:var(--ink-soft);white-space:nowrap;
+}
+
+.files-prova{list-style:none;padding:0;margin:0;display:grid;gap:1.1rem}
+
+/* tria (desplegable) */
+.fila-prova.tipus-tria{
+  display:grid;grid-template-columns:1.6rem 1fr minmax(11rem,13rem);
+  gap:.6rem;align-items:center;
+}
+@media(max-width:780px){
+  .fila-prova.tipus-tria{grid-template-columns:1.4rem 1fr;gap:.3rem .5rem}
+  .fila-prova.tipus-tria select{grid-column:2}
+}
+
+/* veritat/fals + raó, i preguntes d'opció única */
+.fila-prova.tipus-dosnivells,
+.fila-prova.tipus-unica,
+.fila-prova.tipus-oberta{
+  border-top:1px solid var(--rule);padding-top:1rem;
+}
+.files-prova > li:first-child{border-top:0;padding-top:0}
+.dn-cap{display:grid;grid-template-columns:1.6rem 1fr;gap:.6rem;margin-bottom:.5rem}
+.dn-per{
+  margin:.6rem 0 .3rem 2.2rem;font-family:var(--display);
+  font-weight:500;font-size:.88rem;color:var(--steel);
+}
+.opcions-radio{list-style:none;margin:0 0 0 2.2rem;padding:0;display:grid;gap:.3rem}
+.opcions-radio.vf{grid-template-columns:repeat(2,max-content);gap:.3rem 1.2rem}
+.opcions-radio label{
+  display:flex;gap:.6rem;align-items:flex-start;cursor:pointer;
+  padding:.35rem .6rem;border:1px solid var(--rule);background:#f9fbfb;
+}
+.opcions-radio label:has(input:checked){border-color:var(--steel);background:#e8eff2}
+.opcions-radio input{margin-top:.35rem;accent-color:var(--steel);width:1rem;height:1rem;flex:0 0 auto}
+
+.figura-svg svg{width:100%;max-width:640px;height:auto;display:block;background:#f4f7f8;border:1px solid var(--rule)}
+
+.fila-prova textarea{
+  font-family:var(--text);font-size:.95rem;color:var(--ink);
+  background:#f4f7f8;border:1px solid var(--rule);
+  padding:.55rem .6rem;width:100%;border-radius:0;resize:vertical;
+}
+.ajuda-frase{font-size:.88rem;color:var(--ink-soft);margin:.3rem 0 0}
+
+/* versió pas a pas */
+.nav-pas{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  margin-top:1.4rem;font-family:var(--display);color:var(--steel);
+}
+.nav-pas button:disabled{opacity:.4;cursor:default}
+
+/* versió amb suport: lletra més gran i més aire */
+body.suport{font-size:19px;line-height:1.7}
+body.suport .opcions-radio label{padding:.55rem .75rem}
+.xuleta-titol{
+  max-width:900px;margin:1.6rem auto -1.2rem;padding:0 1.25rem;
+  font-family:var(--display);font-size:.9rem;color:var(--steel);
+}
+
+/* esquemes dins de les preguntes: sota l'enunciat, alineats amb les opcions */
+.fila-prova .figura-svg{margin:.3rem 0 .8rem 2.2rem}
+.figura-svg.petita svg{max-width:300px}
+@media(max-width:780px){.fila-prova .figura-svg{margin-left:0}}

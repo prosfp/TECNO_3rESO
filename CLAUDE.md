@@ -37,3 +37,13 @@ Abans de crear una fitxa nova, llegeix sencers almenys dos exemples existents
 per confirmar el patró exacte. Si algun contingut pedagògic concret (quines
 preguntes, quines respostes) no queda clar, pregunta-ho — la part tècnica la
 pots deduir sol, la part de continguts no.
+
+## Proves (exàmens)
+- Motor propi: `assets/motor-prova.js` + `assets/estil-prova.css` (no toquen motor-fitxa.js).
+- El contingut de cada prova va XIFRAT (`prova-N/contingut.js`), generat amb
+  `eines/xifra-prova.py contingut.json CODI sortida.js NOM_VARIABLE`. El JSON amb les
+  preguntes en clar NO es puja mai al repositori (GitHub Pages el publicaria).
+- Variants per alumne segons nom+grup; sense feedback ni nota a pantalla; una sola entrega;
+  compta sortides de la pàgina (columna "solucions" del full) i minuts (columna "activitats").
+- Les respostes obertes s'envien a una segona pestanya («Prova N — Respostes obertes»).
+- Cada prova té `index.html` (ordinària) i `versio-suport.html` (pas a pas, xuleta, 🔊 Escolta).

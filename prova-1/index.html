@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Prova 1 · Esforços i estructures</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/estil.css" />
+    <link rel="stylesheet" href="../assets/estil-prova.css" />
+  </head>
+  <body>
+    <div class="barra">
+      <div class="barra-int">
+        <span class="xip">Prova 1 · Esforços i estructures</span>
+        <span class="marcador">Part A · digital · 7 punts</span>
+      </div>
+    </div>
+
+    <header class="portada">
+      <p class="sessio">Prova 1 · Tecnologia i Digitalització · 3r ESO</p>
+      <h1>Esforços i estructures</h1>
+      <p class="entradeta">
+        Aquesta és la part digital de la prova (7 punts). La part en paper (3 punts) la faràs després.
+      </p>
+    </header>
+
+    <section class="avis-prova" aria-label="Instruccions">
+      <ul>
+        <li>Escriu el teu <b>nom i cognom</b> tal com surten a la llista, tria el grup i escriu el <b>codi</b> que et dirà el professor.</li>
+        <li>Cada alumne té <b>preguntes diferents</b>: mirar la pantalla del company no t'ajudarà.</li>
+        <li>No veuràs si encertes ni la nota fins que el professor la corregeixi. Només la pots entregar <b>una vegada</b>.</li>
+        <li>No surtis d'aquesta pàgina durant la prova: queda registrat. Si es tanca per error, torna a entrar amb el mateix nom i recuperaràs les respostes.</li>
+      </ul>
+    </section>
+
+    <section class="identificacio" id="bloc-identificacio">
+      <div class="id-caixa tres">
+        <div class="id-camp">
+          <label for="camp-nom">Nom i cognoms</label>
+          <input type="text" id="camp-nom" autocomplete="off" placeholder="Nom i cognom" />
+        </div>
+        <div class="id-camp">
+          <label for="camp-grup">Grup</label>
+          <select id="camp-grup">
+            <option value="">Tria el grup…</option>
+            <option value="3r ESO A">3r ESO A</option>
+            <option value="3r ESO B">3r ESO B</option>
+            <option value="3r ESO C">3r ESO C</option>
+          </select>
+        </div>
+        <div class="id-camp">
+          <label for="camp-codi">Codi de la prova</label>
+          <input type="text" id="camp-codi" autocomplete="off" autocapitalize="characters" placeholder="El diu el professor" />
+        </div>
+      </div>
+    </section>
+    <div class="id-inici" id="bloc-inici">
+      <button type="button" id="btn-inici">Comença la prova</button>
+      <p class="estat-entrega" id="estat-inici" aria-live="polite"></p>
+    </div>
+    <p class="resum-alumne" id="resum-alumne" hidden></p>
+
+    <main id="zona-prova" aria-live="polite"></main>
+
+    <section class="entrega" id="entrega" hidden>
+      <div class="entrega-caixa">
+        <h2>Entrega la prova</h2>
+        <p>Abans d'entregar, repassa que hagis respost totes les preguntes. Després ja no ho podràs canviar.</p>
+        <button type="button" id="btn-entrega">Entrega la prova</button>
+        <p class="estat-entrega" id="estat-entrega" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <footer>Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és un vici»</footer>
+
+    <script src="contingut.js"></script>
+    <script src="../assets/motor-prova.js"></script>
+    <script>
+      // ⚠️ La mateixa URL de l'Apps Script que fas servir a S1 i S2 (mateix full de càlcul).
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbxXcgmuqEghVayqajZL-sYY8dNcPXuKbjXQNXoA90HjE0QE2t3mq_EcvKa7Gk40RCBxBA/exec";
+
+      ProvaEngine.init({
+        scriptUrl: SCRIPT_URL,
+        xifrat: PROVA_XIFRADA,
+        clauLocal: "prova1",
+        pasAPas: false,
+        escolta: false,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+
+# Fonts de les proves amb les respostes en clar: no es pugen mai
+prova-*/*.json
+font/
