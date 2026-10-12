@@ -43,6 +43,8 @@ pots deduir sol, la part de continguts no.
 - El contingut de cada prova va XIFRAT (`prova-N/contingut.js`), generat amb
   `eines/xifra-prova.py contingut.json CODI sortida.js NOM_VARIABLE`. El JSON amb les
   preguntes en clar NO es puja mai al repositori (GitHub Pages el publicaria).
+- Es pot posar un codi per grup (`"3r ESO A=CODI1;3r ESO B=CODI2;..."` a xifra-prova.py): el codi
+  d'un grup no obre la prova amb un altre grup. Els codis van a la pauta del professor, mai al repo.
 - Variants per alumne segons nom+grup; sense feedback ni nota a pantalla; una sola entrega;
   compta sortides de la pàgina (columna "solucions" del full) i minuts (columna "activitats").
 - Les respostes obertes s'envien a una segona pestanya («Prova N — Respostes obertes»).
