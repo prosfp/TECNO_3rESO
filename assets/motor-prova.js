@@ -23,6 +23,7 @@
  *   ProvaEngine.init({
  *     scriptUrl: "https://script.google.com/macros/s/.../exec",
  *     xifrat: { salt: "...", iv: "...", dades: "..." },   // generat amb eines/xifra-prova.py
+ *       // o bé { perGrup: { "3r ESO A": {salt,iv,dades}, ... } } si cada grup té el seu codi
  *     clauLocal: "prova1-normal",                          // per desar el progrés al navegador
  *     pasAPas: false,          // true = una pregunta per pantalla (versió amb suport)
  *     escolta: false           // true = botó 🔊 Escolta a cada pregunta
@@ -194,7 +195,10 @@ const ProvaEngine = (function () {
       estatInici.textContent = "Obrint la prova…";
       estatInici.className = "estat-entrega enviant";
       try {
-        prova = await desxifra(xifrat, codi);
+        // amb un codi per grup, només s'intenta obrir el bloc del grup triat
+        const bloc = xifrat.perGrup ? xifrat.perGrup[grup] : xifrat;
+        if (!bloc) throw new Error("sense bloc per a aquest grup");
+        prova = await desxifra(bloc, codi);
       } catch (e) {
         btnInici.disabled = false;
         estatInici.textContent = "El codi no és correcte. Torna-ho a provar.";

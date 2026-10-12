@@ -4,8 +4,12 @@ Xifra el contingut d'una prova perquè només es pugui obrir amb un codi.
 Ús:
     python eines/xifra-prova.py contingut.json CODI sortida.js NOM_VARIABLE
 
-Exemple:
+Exemple (un sol codi per a tothom):
     python eines/xifra-prova.py prova1-normal.json TRIANGLE prova-1/contingut.js PROVA_XIFRADA
+
+Exemple (un codi per grup; el nom del grup ha de ser igual que al desplegable):
+    python eines/xifra-prova.py prova1-normal.json "3r ESO A=TRIANGLE;3r ESO B=PILAR;3r ESO C=BIGA" prova-1/contingut.js PROVA_XIFRADA
+    Amb codis per grup, el codi d'un grup no obre la prova si es tria un altre grup.
 
 Genera un fitxer .js amb una constant (p. ex. PROVA_XIFRADA) que la pàgina de
 la prova passa a ProvaEngine.init({ xifrat: PROVA_XIFRADA, ... }).
@@ -45,11 +49,17 @@ def main():
     entrada, codi, sortida, variable = sys.argv[1:]
     with open(entrada, encoding="utf-8") as f:
         contingut = json.load(f)
-    blob = xifra(json.dumps(contingut, ensure_ascii=False), codi)
+    text = json.dumps(contingut, ensure_ascii=False)
+    if "=" in codi:
+        parells = [p.split("=", 1) for p in codi.split(";") if p.strip()]
+        blob = {"perGrup": {g.strip(): xifra(text, c) for g, c in parells}}
+        codi = ", ".join(f"{g.strip()}: {c.strip().upper()}" for g, c in parells)
+    else:
+        blob = xifra(text, codi)
     with open(sortida, "w", encoding="utf-8") as f:
         f.write("// Contingut xifrat de la prova. Generat amb eines/xifra-prova.py — no editar a mà.\n")
         f.write(f"const {variable} = {json.dumps(blob)};\n")
-    print(f"Fet: {sortida} ({variable}), codi «{codi.strip().upper()}»")
+    print(f"Fet: {sortida} ({variable}), codi «{codi.strip().upper() if '=' not in codi else codi}»")
 
 
 if __name__ == "__main__":
