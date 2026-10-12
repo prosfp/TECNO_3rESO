@@ -1,0 +1,22 @@
+{
+  "pont-a": {
+    "model": "Sí, perquè està formada per triangles: el triangle és l'única figura que no es deforma si no es trenca alguna barra.",
+    "accepta": "una raó sense triangles però raonable, com «la forma la fa resistent» (OK+); «reparteix el pes» o «té suports» (OK)."
+  },
+  "pont-b": {
+    "model": "La triangulació: s'han posat barres en diagonal perquè l'estructura quedi formada per triangles.",
+    "accepta": "una idea estructural parcial, com «posant els punts C i E» (OK). Un esforç o «posar un pilar al mig» = NO."
+  },
+  "pont-c": {
+    "model": "Compressió. És el cordó de dalt: quan el pont carrega, s'escurça perquè les barres dels costats l'empenyen. Com que el pes cau al mig, també hi ha una mica de flexió.",
+    "accepta": "compressió sola o amb flexió (OK+); «tracció i compressió» (OK). Només flexió = NO: la idea clau és la compressió."
+  },
+  "pont-d": {
+    "model": "Tracció: són el cordó de baix i s'estiren quan el pont carrega. Amb el pes repartit pel tauler, també treballen a flexió.",
+    "accepta": "tracció o flexió, justificades o no (OK+); «tracció i compressió» (OK). Només compressió = NO."
+  },
+  "raon-2": {
+    "model": "Cauria: els tirants són cables que només treballen a tracció i han de penjar d'un punt alt. Sense pilar no tenen on aguantar-se.",
+    "accepta": "«cauria» amb una raó general, com «no tindria estabilitat» (OK+); «cauria» sense raó (OK)."
+  }
+}

@@ -42,7 +42,9 @@ eines/
    - `titols`: un nom curt per a cada activitat, per identificar-la al full de
      càlcul.
 5. Afegeix l'enllaç a la sessió nova dins `index.html` (l'arrel del repositori).
-6. Puja els canvis (commit + push). GitHub Pages es reconstrueix sola.
+6. Genera'n les solucions (`python3 eines/genera-solucions.py <carpeta>`) i
+   afegeix l'enllaç a `solucions.html` de l'arrel (vegeu més avall).
+7. Puja els canvis (commit + push). GitHub Pages es reconstrueix sola.
 
 ## Solucions per al professorat
 
@@ -60,9 +62,21 @@ s1-forces-esforcos/
 ```
 
 `solucions.html` no té els camps d'identificació ni el botó d'entrega (no té
-sentit "entregar" res des d'aquí). Segueix el mateix patró quan facis una
-sessió nova: duplica `index.html` a `solucions.html`, posa `ambSolucions:
-true` i treu les seccions `identificacio` i `entrega`.
+sentit "entregar" res des d'aquí). **No l'editis a mà**: es genera a partir
+de l'`index.html` de la sessió amb
+
+```
+python3 eines/genera-solucions.py s2-estructures
+```
+
+Torna'l a executar cada cop que canviïs la fitxa de l'alumnat. Si la sessió
+té preguntes de text lliure (textarea), pots posar-ne les respostes model a
+`<carpeta>/solucions-obertes.json` (clau = `id` del textarea, amb `model` i,
+opcionalment, `accepta`) i l'script les afegeix sota cada pregunta.
+
+Totes les solucions es troben des de `/solucions` (l'arrel del repositori,
+`solucions.html`): afegeix-hi l'enllaç de cada sessió nova. Cada pàgina
+també s'obre directament amb `.../<carpeta>/solucions`.
 
 A la pàgina de l'alumnat (`index.html`), l'opció `comprovaDespresEntrega:
 true` de `FitxaEngine.init({...})` amaga els botons "Comprova" i "Torna-ho a

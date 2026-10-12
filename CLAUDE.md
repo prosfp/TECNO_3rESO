@@ -25,6 +25,12 @@ pot quedar-se curt.
 - Un select pot portar `data-opcions="A|B|C"` per tenir una llista pròpia, diferent
   de la llista global d'`opcions` de `FitxaEngine.init(...)`.
 - Les respostes es codifiquen sempre amb `eines/codifica-respostes.py`, mai a mà.
+- Cada fitxa té la seva còpia per al professorat `solucions.html`, generada SEMPRE
+  amb `eines/genera-solucions.py <carpeta>` (mai a mà; regenera-la si canvia
+  l'index.html). Respostes model de les preguntes obertes a
+  `<carpeta>/solucions-obertes.json` (si hi ha rúbrica, treu-les d'allà). Afegeix
+  l'enllaç a `solucions.html` de l'arrel (accés del professor amb `/solucions`).
+  Les proves no en tenen (van xifrades i tenen la pauta a part).
 - Imatges: `<img src="imatges/nom.png" onerror="...">` amb un avís de "falta la
   imatge" com a alternativa — mai en inventis una que no existeixi.
 - Entrega: un sol full de càlcul + Apps Script per a totes les sessions; el
