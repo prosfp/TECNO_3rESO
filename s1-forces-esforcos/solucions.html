@@ -2,8 +2,8 @@
 <html lang="ca">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>S1 · Forces, esforços — Solucions (professorat)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -839,9 +839,13 @@
     </footer>
     <script src="../assets/motor-fitxa.js"></script>
     <script>
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbxXcgmuqEghVayqajZL-sYY8dNcPXuKbjXQNXoA90HjE0QE2t3mq_EcvKa7Gk40RCBxBA/exec";
+
       FitxaEngine.init({
-        // ⚙️ Còpia només per al professorat: mostra les solucions i no envia
-        // res al full de càlcul (no hi ha botó d'entrega en aquesta versió).
+        // ⚙️ Còpia només per al professorat, generada amb eines/genera-solucions.py:
+        // mostra les solucions i no envia res al full de càlcul.
+        activitat: "S1 Forces i esforços",
         ambSolucions: true,
         opcions: ["Tracció", "Compressió", "Flexió", "Torsió", "Cisallament"],
         titols: {
