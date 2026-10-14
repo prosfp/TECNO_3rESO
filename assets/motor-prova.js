@@ -209,6 +209,26 @@ const ProvaEngine = (function () {
       clauAlumne = `${clauLocal}:${normalitza(grup)}:${normalitza(nom)}`;
       const guardat = llegeix(clauAlumne);
       if (guardat && guardat.entregada) {
+        // Recuperació: les primeres entregues enviaven la resposta oberta amb un nom de camp
+        // que el full no reconeixia. Si encara no s'ha reenviat, es torna a enviar ara.
+        if (!guardat.obertaReenviada && guardat.respostes && scriptUrl) {
+          respostes = guardat.respostes;
+          construeixModel(nom, grup);
+          const c = corregeix();
+          if (Object.keys(c.oberta).length) {
+            const obertes = new URLSearchParams(Object.assign({
+              sessio: prova.activitatOberta || (prova.activitat + " — Respostes obertes"),
+              nom, grup
+            }, c.oberta));
+            try {
+              await fetch(scriptUrl, { method: "POST", mode: "no-cors", body: obertes });
+              desa(clauAlumne, Object.assign(guardat, { obertaReenviada: true }));
+              estatInici.textContent = "Aquesta prova ja està entregada. S'ha tornat a enviar la teva resposta escrita al professor. Gràcies!";
+              estatInici.className = "estat-entrega ok";
+              return;
+            } catch (e) { /* si falla, es mostra el missatge habitual */ }
+          }
+        }
         estatInici.textContent = "Aquesta prova ja està entregada amb aquest nom. Si és un error, avisa el professor.";
         estatInici.className = "estat-entrega error";
         return;
@@ -394,7 +414,8 @@ const ProvaEngine = (function () {
       model.forEach((m, bi) => {
         const b = m.bloc;
         if (b.tipus === "oberta") {
-          m.files.forEach((f, i) => { oberta[`resposta_${bi + 1}${String.fromCharCode(97 + i)}`] = (respostes[f.clau] || "").trim(); });
+          // el full de càlcul només reconeix camps «resposta_N» amb N enter
+          m.files.forEach(f => { oberta[`resposta_${Object.keys(oberta).length + 1}`] = (respostes[f.clau] || "").trim(); });
           detall.push(`${bi + 1} ${b.titol}: pendent (${b.punts} p, la corregeix el professor)`);
           return;
         }
@@ -468,7 +489,7 @@ const ProvaEngine = (function () {
       const principal = new URLSearchParams({
         sessio: prova.activitat,
         nom, grup,
-        encerts: String(c.punts).replace(".", ","),
+        encerts: String(c.punts), // amb punt decimal: amb coma el full ho llegia com a 0
         total: c.max,
         percentatge,
         activitats: `${pasAPas ? "versió amb suport" : "versió ordinària"} · ${minuts} min`,
@@ -484,7 +505,7 @@ const ProvaEngine = (function () {
         fetch(scriptUrl, { method: "POST", mode: "no-cors", body: principal }),
         fetch(scriptUrl, { method: "POST", mode: "no-cors", body: obertes })
       ]).then(() => {
-        desaProgres({ entregada: true, quan: new Date().toISOString() });
+        desaProgres({ entregada: true, obertaReenviada: true, quan: new Date().toISOString() });
         zona.querySelectorAll("input, select, textarea, button").forEach(el => { el.disabled = true; });
         zona.hidden = true;
         $(".entrega-caixa h2").textContent = "Prova entregada";
