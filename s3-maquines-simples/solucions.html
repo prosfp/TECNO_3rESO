@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>S3 · Màquines simples — Solucions (professorat)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/estil.css" />
+    <style>
+      /* codi propi d'aquesta pàgina: recull inicial, laboratoris (simuladors) i raonament */
+      :root {
+        --forca: #b8352a;
+        --resist: #1d6fb8;
+        --fusta: #c9a06b;
+      }
+      .bloc {
+        max-width: 900px;
+        margin: 2rem auto 0;
+        padding: 0 1.25rem;
+      }
+      .capsa {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        padding: 1.4rem 1.5rem;
+      }
+      .capsa h2 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin: 0 0 0.6rem;
+      }
+      .capsa h3 {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 1rem;
+        color: var(--steel);
+        margin: 1.1rem 0 0.3rem;
+      }
+      .duo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin: 0.6rem 0;
+      }
+      .duo > div {
+        border: 1px solid var(--rule);
+        padding: 0.6rem 0.8rem;
+        background: #f4f7f8;
+      }
+      .f { color: var(--forca); font-weight: 600; }
+      .r { color: var(--resist); font-weight: 600; }
+      .formula {
+        font-family: "Cambria Math", "STIX Two Math", Georgia, serif;
+        font-size: 1.35rem;
+        text-align: center;
+        margin: 0.6rem 0;
+        padding: 0.5rem;
+        background: #f4f7f8;
+        border: 1px solid var(--rule);
+      }
+      .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 .15em; }
+      .frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 .2em; }
+      .frac > span { line-height: 1.15; }
+      .regla {
+        border-left: 4px solid var(--cisallament);
+        background: #fbf5e6;
+        padding: 0.6rem 0.9rem;
+        margin: 0.8rem 0;
+      }
+      .lab {
+        border-top: 4px solid var(--steel);
+      }
+      .lab .nom {
+        font-family: var(--display);
+        font-size: 0.85rem;
+        color: var(--steel);
+        margin: 0;
+      }
+      .lab-graella {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+        gap: 1.2rem;
+        align-items: start;
+        margin-top: 0.8rem;
+      }
+      .lab svg {
+        width: 100%;
+        height: auto;
+        background: #f4f7f8;
+        border: 1px solid var(--rule);
+        display: block;
+      }
+      .controls label {
+        display: block;
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.88rem;
+        margin: 0.55rem 0 0.1rem;
+      }
+      .controls label output { float: right; color: var(--steel); }
+      .controls input[type="range"] { width: 100%; accent-color: var(--steel); }
+      .controls select {
+        width: 100%;
+        font: inherit;
+        padding: 0.35rem;
+        border: 1px solid var(--rule);
+      }
+      .lectura {
+        margin-top: 0.9rem;
+        padding: 0.7rem 0.8rem;
+        background: #eef3f5;
+        border: 1px solid var(--rule);
+        font-size: 0.95rem;
+      }
+      .lectura b { font-family: var(--display); }
+      .estat { font-family: var(--display); font-weight: 700; }
+      .estat.ok { color: var(--ok); }
+      .estat.ko { color: var(--ko); }
+      .llegir {
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+        margin: 0.3rem 0 0;
+      }
+      .raonament label {
+        display: block;
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.92rem;
+        margin: 0 0 0.3rem;
+      }
+      .raonament textarea {
+        font-family: var(--text);
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: #f4f7f8;
+        border: 1px solid var(--rule);
+        padding: 0.55rem 0.6rem;
+        width: 100%;
+        resize: vertical;
+      }
+      .raonament .pregunta { margin-bottom: 1.1rem; }
+      .raonament .compt { font-size: 0.78rem; color: var(--ink-soft); text-align: right; display: block; margin-top: .2rem; }
+      .pista { font-size: .9rem; color: var(--ink-soft); margin: .2rem 0 .8rem; }
+      @media (max-width: 720px) {
+        .lab-graella, .duo { grid-template-columns: 1fr; }
+      }
+    </style>
+      <style>
+      /* només a solucions.html: respostes model de les preguntes obertes */
+      .model-resposta {
+        border-left: 4px solid var(--ok);
+        background: #eef6f1;
+        padding: 0.55rem 0.8rem;
+        margin-top: 0.5rem;
+        font-size: 0.92rem;
+      }
+      .model-resposta b { font-family: var(--display); font-weight: 500; }
+      .model-resposta .accepta { margin: 0.3rem 0 0; color: var(--ink-soft); }
+    </style>
+  </head>
+  <body>
+    <div
+      style="background:var(--ko);color:#fff;text-align:center;padding:.6rem 1rem;font-family:var(--display);font-weight:500;font-size:.85rem;"
+    >
+      ⚠️ Versió amb solucions, només per al professorat — no la comparteixis
+      amb l'alumnat. No està enllaçada des de la web pública.
+    </div>
+
+    <div class="barra">
+      <div class="barra-int">
+        <span class="xip"><i style="background: var(--forca)"></i>F · força</span>
+        <span class="xip"><i style="background: var(--resist)"></i>R · resistència</span>
+        <span class="marcador" id="marcador" aria-live="polite">0 de 6 activitats resoltes</span>
+      </div>
+    </div>
+
+    <header class="portada">
+      <p class="sessio">Sessió 3 · Tecnologia i Digitalització · 3r ESO</p>
+      <h1>Juguem amb les màquines simples</h1>
+      <p class="entradeta">
+        Ja coneixeu les cinc màquines i les seves fórmules. Avui les fareu
+        funcionar: a cada laboratori podeu moure els números i veure què passa.
+        Les preguntes no es responen copiant la fórmula, sinó <strong>provant</strong>.
+      </p>
+    </header>
+
+    <!-- ============ RECULL INICIAL ============ -->
+    <section class="bloc">
+      <div class="capsa">
+        <h2>Abans de jugar: el que val per a totes</h2>
+        <p>
+          Una <strong>màquina</strong> és un invent que ens ajuda a fer una feina.
+          En diem <strong>simple</strong> quan fa la feina en un sol pas i té molt poques
+          peces. Les màquines complexes (la bici, una grua, un cotxe) són combinacions de
+          màquines simples.
+        </p>
+        <div class="duo">
+          <div><span class="f">F · Força</span><br />L'empenta o l'estirada que fem nosaltres.</div>
+          <div><span class="r">R · Resistència</span><br />El pes o l'obstacle que volem vèncer.</div>
+        </div>
+        <h3>L'avantatge mecànic: quantes vegades m'ajuda la màquina</h3>
+        <div class="formula">i = <span class="frac"><span class="r">R</span><span class="f">F</span></span></div>
+        <p class="llegir">Es llegeix: «quantes vegades la resistència és més gran que la meva força». Si i = 4, fent 100 N moc 400 N.</p>
+        <div class="regla">
+          <strong>La regla d'or.</strong> Cap màquina regala energia: <strong>el que guanyes en força
+          ho pagues en camí</strong>. Si fas 4 vegades menys força, hauràs de recórrer 4 vegades més
+          distància (més rampa, més corda, més voltes). Ho comprovaràs a tots els laboratoris.
+        </div>
+        <h3>Les cinc i per què es diuen així</h3>
+        <ul>
+          <li><strong>Palanca</strong> — una barra que «fa palanca»: es recolza en un punt (el <em>fulcre</em>) i gira.</li>
+          <li><strong>Politja</strong> — una roda amb una canal per on passa una corda.</li>
+          <li><strong>Pla inclinat</strong> — literalment un pla (una superfície plana) que no està horitzontal, sinó inclinat: una rampa.</li>
+          <li><strong>Cargol</strong> — la rosca fa una espiral, com la closca d'un cargol. És un pla inclinat enrotllat.</li>
+          <li><strong>Torn</strong> — un cilindre que dona voltes (torna, gira) amb una manovella. És una palanca que gira.</li>
+        </ul>
+      </div>
+    </section>
+
+    <main>
+      <!-- ============ LAB 1 · PALANCA ============ -->
+      <section class="bloc" style="padding:0;margin-top:2rem">
+        <div class="capsa lab">
+          <p class="nom">Laboratori 1</p>
+          <h2>La palanca</h2>
+          <p>Una barra rígida que gira sobre el <strong>fulcre</strong>. Cada força intenta fer girar la barra: com més lluny del fulcre està, més «fa girar».</p>
+          <div class="formula"><span class="f">F</span> · d₁ = <span class="r">R</span> · d₂</div>
+          <p class="llegir"><strong>Com es llegeix:</strong> el que fa girar cap a un costat (força × el seu braç) ha de ser igual al que fa girar cap a l'altre (resistència × el seu braç). Aleshores la barra queda en <em>equilibri</em>.</p>
+          <div class="lab-graella">
+            <svg id="sv-palanca" viewBox="0 0 420 240" role="img" aria-label="Simulador de palanca"></svg>
+            <div class="controls">
+              <label>Resistència R <output id="o-pR"></output></label>
+              <input type="range" id="pR" min="100" max="1000" step="50" value="500" />
+              <label>Braç de la resistència d₂ <output id="o-pd2"></output></label>
+              <input type="range" id="pd2" min="0.25" max="2" step="0.25" value="0.5" />
+              <label>Braç de la força d₁ <output id="o-pd1"></output></label>
+              <input type="range" id="pd1" min="0.25" max="3" step="0.25" value="1" />
+              <label>La teva força F <output id="o-pF"></output></label>
+              <input type="range" id="pF" min="0" max="1000" step="5" value="100" />
+            </div>
+          </div>
+          <div class="lectura" id="l-palanca"></div>
+        </div>
+      </section>
+
+      <section class="activitat" data-activitat="a1">
+        <h2><em>1</em> Prova-ho amb la palanca</h2>
+        <p class="consigna">Fes servir el laboratori per respondre. Mou els controls i mira quan la barra queda en equilibri.</p>
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span><span class="enunciat">Amb R = 500 N i d₂ = 0,5 m, poses d₁ a 2 m en lloc d'1 m. La força que cal fer es fa…</span>
+            <select data-c="TGEgbWVpdGF0" data-opcions="El doble|La meitat|Igual|El triple" aria-label="Palanca a"></select>
+          </li>
+          <li>
+            <span class="lletra">b</span><span class="enunciat">I si en canvi allunyes la pedra del fulcre, de 0,5 m a 1 m? La força que cal fer es fa…</span>
+            <select data-c="RWwgZG9ibGU=" data-opcions="El doble|La meitat|Igual|El triple" aria-label="Palanca b"></select>
+          </li>
+          <li>
+            <span class="lletra">c</span><span class="enunciat">Repte: una pedra de 600 N està a 0,5 m del fulcre i només pots fer 150 N. A quina distància del fulcre has d'empènyer?</span>
+            <select data-c="MiBt" data-opcions="0,5 m|1 m|1,5 m|2 m|3 m" aria-label="Palanca c"></select>
+          </li>
+          <li>
+            <span class="lletra">d</span><span class="enunciat">Per què les tisores de podar tenen els mànecs tan llargs?</span>
+            <select data-c="UGVyIGZlciBtZW55cyBmb3LDp2E=" data-opcions="Per fer menys força|Per tallar més ràpid|Perquè pesin menys|Per fer més força amb les mans" aria-label="Palanca d"></select>
+          </li>
+        </ul>
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+          <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ LAB 2 · POLITJA ============ -->
+      <section class="bloc" style="padding:0;margin-top:2rem">
+        <div class="capsa lab">
+          <p class="nom">Laboratori 2</p>
+          <h2>La politja</h2>
+          <p>La <strong>corriola</strong> (politja fixa) només canvia la direcció: estirar cap avall és més còmode. Les <strong>politges mòbils</strong> pugen amb la càrrega i reparteixen el pes entre més trossos de corda.</p>
+          <div class="formula"><span class="f">F</span> = <span class="frac"><span class="r">R</span><span>2 · n</span></span></div>
+          <p class="llegir"><strong>Com es llegeix:</strong> n és el nombre de politges <em>mòbils</em>. Cada mòbil afegeix 2 trossos de corda que aguanten la càrrega, i la càrrega es reparteix entre tots. Truc: <strong>compta les cordes que aguanten la càrrega</strong> i divideix.</p>
+          <div class="lab-graella">
+            <svg id="sv-politja" viewBox="0 0 420 260" role="img" aria-label="Simulador de politges"></svg>
+            <div class="controls">
+              <label for="tN">Muntatge</label>
+              <select id="tN">
+                <option value="0">Corriola (politja fixa)</option>
+                <option value="1">Politja mòbil (n = 1)</option>
+                <option value="2" selected>Polispast (n = 2)</option>
+                <option value="3">Polispast (n = 3)</option>
+              </select>
+              <label>Càrrega R <output id="o-tR"></output></label>
+              <input type="range" id="tR" min="100" max="1200" step="50" value="800" />
+              <label>Estira la corda <output id="o-tC"></output></label>
+              <input type="range" id="tC" min="0" max="4" step="0.25" value="0" />
+            </div>
+          </div>
+          <div class="lectura" id="l-politja"></div>
+        </div>
+      </section>
+
+      <section class="activitat" data-activitat="a2">
+        <h2><em>2</em> Prova-ho amb les politges</h2>
+        <p class="consigna">Canvia el muntatge i estira la corda. Fixa't en quant puja la càrrega.</p>
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span><span class="enunciat">Amb una corriola, la força que fas comparada amb la càrrega és…</span>
+            <select data-c="SWd1YWw=" data-opcions="El doble|La meitat|Igual|La quarta part" aria-label="Politja a"></select>
+          </li>
+          <li>
+            <span class="lletra">b</span><span class="enunciat">Si passes d'1 politja mòbil a 2, la força que cal fer es fa…</span>
+            <select data-c="TGEgbWVpdGF0" data-opcions="El doble|La meitat|Igual|La quarta part" aria-label="Politja b"></select>
+          </li>
+          <li>
+            <span class="lletra">c</span><span class="enunciat">Amb el polispast de n = 2, per pujar la càrrega 1 m, quanta corda has d'estirar?</span>
+            <select data-c="NCBt" data-opcions="1 m|2 m|4 m|8 m" aria-label="Politja c"></select>
+          </li>
+          <li>
+            <span class="lletra">d</span><span class="enunciat">Llavors, per què es posen corrioles si no estalvien força?</span>
+            <select data-c="UGVyIGNhbnZpYXIgbGEgZGlyZWNjacOzIGRlIGxhIGZvcsOnYQ==" data-opcions="Per canviar la direcció de la força|Per fer menys força|Per pujar més ràpid|Perquè pesen menys" aria-label="Politja d"></select>
+          </li>
+        </ul>
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+          <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ LAB 3 · PLA INCLINAT ============ -->
+      <section class="bloc" style="padding:0;margin-top:2rem">
+        <div class="capsa lab">
+          <p class="nom">Laboratori 3</p>
+          <h2>El pla inclinat</h2>
+          <p>En lloc d'aixecar el pes de cop, el pugem a poc a poc per una rampa.</p>
+          <div class="formula"><span class="f">F</span> = <span class="frac"><span><span class="r">P</span> · h</span><span>l</span></span></div>
+          <p class="llegir"><strong>Com es llegeix:</strong> P és el pes, h l'alçada que pugem i l la llargada de la rampa. Si la rampa és 3 vegades més llarga que l'alçada, fas 3 vegades menys força que aixecant-ho de dret.</p>
+          <div class="lab-graella">
+            <svg id="sv-pla" viewBox="0 0 420 220" role="img" aria-label="Simulador de pla inclinat"></svg>
+            <div class="controls">
+              <label>Pes de la caixa P <output id="o-lP"></output></label>
+              <input type="range" id="lP" min="100" max="1500" step="50" value="900" />
+              <label>Alçada h <output id="o-lh"></output></label>
+              <input type="range" id="lh" min="0.5" max="3" step="0.25" value="1" />
+              <label>Llargada de la rampa l <output id="o-ll"></output></label>
+              <input type="range" id="ll" min="0.5" max="10" step="0.25" value="2" />
+            </div>
+          </div>
+          <div class="lectura" id="l-pla"></div>
+        </div>
+      </section>
+
+      <section class="activitat" data-activitat="a3">
+        <h2><em>3</em> Prova-ho amb la rampa</h2>
+        <p class="consigna">Deixa l'alçada quieta i allarga o escurça la rampa.</p>
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span><span class="enunciat">Mateixa alçada, rampa el doble de llarga. La força que cal fer es fa…</span>
+            <select data-c="TGEgbWVpdGF0" data-opcions="El doble|La meitat|Igual|El triple" aria-label="Pla a"></select>
+          </li>
+          <li>
+            <span class="lletra">b</span><span class="enunciat">Repte: has de pujar una caixa de 900 N a 1 m d'alçada i només pots fer 300 N. Quina rampa et cal, com a mínim?</span>
+            <select data-c="MyBt" data-opcions="1 m|2 m|3 m|9 m" aria-label="Pla b"></select>
+          </li>
+          <li>
+            <span class="lletra">c</span><span class="enunciat">Amb una rampa més llarga…</span>
+            <select data-c="R3VhbnlvIGZvcsOnYSBpIHBlcmRvIGNhbcOt" data-opcions="Guanyo força i perdo camí|Guanyo camí i perdo força|Ho guanyo tot|No canvia res" aria-label="Pla c"></select>
+          </li>
+        </ul>
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+          <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ LAB 4 · CARGOL ============ -->
+      <section class="bloc" style="padding:0;margin-top:2rem">
+        <div class="capsa lab">
+          <p class="nom">Laboratori 4</p>
+          <h2>El cargol</h2>
+          <p>Cada volta sencera de la clau fa avançar el cargol només una mica: el <strong>pas de rosca</strong>. La mà fa un camí molt llarg (tota la volta) i el cargol un de molt curt: per això la força es multiplica tant.</p>
+          <div class="formula"><span class="r">R</span> = <span class="frac"><span><span class="f">F</span> · 2 · π · r</span><span>p</span></span></div>
+          <p class="llegir"><strong>Com es llegeix:</strong> a dalt hi ha la força per la volta que fa la mà (2·π·r és la llargada d'una volta); a baix, el que avança el cargol en aquesta volta (p). Com més llarga la clau i més petit el pas, més força.</p>
+          <div class="lab-graella">
+            <svg id="sv-cargol" viewBox="0 0 420 220" role="img" aria-label="Simulador de cargol"></svg>
+            <div class="controls">
+              <label>La teva força F <output id="o-cF"></output></label>
+              <input type="range" id="cF" min="5" max="50" step="5" value="20" />
+              <label>Llargada de la clau r <output id="o-cr"></output></label>
+              <input type="range" id="cr" min="50" max="300" step="25" value="150" />
+              <label>Pas de rosca p <output id="o-cp"></output></label>
+              <input type="range" id="cp" min="1" max="5" step="0.5" value="2" />
+            </div>
+          </div>
+          <div class="lectura" id="l-cargol"></div>
+        </div>
+      </section>
+
+      <section class="activitat" data-activitat="a4">
+        <h2><em>4</em> Prova-ho amb el cargol</h2>
+        <p class="consigna">Canvia el pas de rosca i la llargada de la clau.</p>
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span><span class="enunciat">Mateixa força i mateixa clau, però un cargol amb el pas més petit. La resistència que pots vèncer és…</span>
+            <select data-c="TcOpcyBncmFu" data-opcions="Més gran|Més petita|Igual" aria-label="Cargol a"></select>
+          </li>
+          <li>
+            <span class="lletra">b</span><span class="enunciat">Fas servir una clau el doble de llarga. La resistència que pots vèncer es fa…</span>
+            <select data-c="RWwgZG9ibGU=" data-opcions="El doble|La meitat|Igual|El triple" aria-label="Cargol b"></select>
+          </li>
+          <li>
+            <span class="lletra">c</span><span class="enunciat">Per què diem que el cargol és un pla inclinat?</span>
+            <select data-c="UGVycXXDqCBsYSByb3NjYSDDqXMgdW5hIHJhbXBhIGVucm90bGxhZGE=" data-opcions="Perquè la rosca és una rampa enrotllada|Perquè està inclinat quan el colles|Perquè és punxegut|Perquè gira" aria-label="Cargol c"></select>
+          </li>
+        </ul>
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+          <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ LAB 5 · TORN ============ -->
+      <section class="bloc" style="padding:0;margin-top:2rem">
+        <div class="capsa lab">
+          <p class="nom">Laboratori 5</p>
+          <h2>El torn</h2>
+          <p>Un cilindre on s'enrotlla la corda, i una manovella per fer-lo girar. És una <strong>palanca que dona voltes</strong>: el fulcre és l'eix, un braç és la manovella i l'altre és el radi del cilindre.</p>
+          <div class="formula"><span class="f">F</span> · R<sub>m</sub> = <span class="r">R</span> · r<sub>e</sub></div>
+          <p class="llegir"><strong>Com es llegeix:</strong> és la mateixa idea que la palanca. R<sub>m</sub> és el radi de la manovella (braç de la força) i r<sub>e</sub> el radi del cilindre (braç de la resistència).</p>
+          <div class="lab-graella">
+            <svg id="sv-torn" viewBox="0 0 420 240" role="img" aria-label="Simulador de torn"></svg>
+            <div class="controls">
+              <label>Galleda R <output id="o-nR"></output></label>
+              <input type="range" id="nR" min="100" max="1000" step="50" value="300" />
+              <label>Radi del cilindre rₑ <output id="o-nre"></output></label>
+              <input type="range" id="nre" min="2" max="15" step="1" value="5" />
+              <label>Radi de la manovella Rₘ <output id="o-nRm"></output></label>
+              <input type="range" id="nRm" min="10" max="50" step="5" value="30" />
+            </div>
+          </div>
+          <div class="lectura" id="l-torn"></div>
+        </div>
+      </section>
+
+      <section class="activitat" data-activitat="a5">
+        <h2><em>5</em> Prova-ho amb el torn</h2>
+        <p class="consigna">Canvia la manovella i el gruix del cilindre.</p>
+        <ul class="respostes">
+          <li>
+            <span class="lletra">a</span><span class="enunciat">Fas la manovella el doble de llarga. La força que cal fer es fa…</span>
+            <select data-c="TGEgbWVpdGF0" data-opcions="El doble|La meitat|Igual|El triple" aria-label="Torn a"></select>
+          </li>
+          <li>
+            <span class="lletra">b</span><span class="enunciat">Poses un cilindre més gruixut i la mateixa manovella. La força que cal fer és…</span>
+            <select data-c="TcOpcyBncmFu" data-opcions="Més gran|Més petita|Igual" aria-label="Torn b"></select>
+          </li>
+          <li>
+            <span class="lletra">c</span><span class="enunciat">En un torn, què fa de fulcre?</span>
+            <select data-c="TCdlaXg=" data-opcions="L'eix|La manovella|La corda|La galleda" aria-label="Torn c"></select>
+          </li>
+        </ul>
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+          <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- ============ 6 ============ -->
+      <section class="activitat" data-activitat="a6">
+        <h2><em>6</em> Quina màquina triaries?</h2>
+        <p class="consigna">Per a cada feina, quina màquina simple faries servir?</p>
+        <ul class="respostes">
+          <li><span class="lletra">a</span><span class="enunciat">Pujar una moto a la caixa d'una furgoneta</span>
+            <select data-c="UGxhIGluY2xpbmF0" data-opcions="Palanca|Politja|Pla inclinat|Cargol|Torn" aria-label="Feina a"></select></li>
+          <li><span class="lletra">b</span><span class="enunciat">Obrir una llauna de pintura amb un tornavís</span>
+            <select data-c="UGFsYW5jYQ==" data-opcions="Palanca|Politja|Pla inclinat|Cargol|Torn" aria-label="Feina b"></select></li>
+          <li><span class="lletra">c</span><span class="enunciat">Hissar una bandera a dalt d'un pal estirant cap avall</span>
+            <select data-c="UG9saXRqYQ==" data-opcions="Palanca|Politja|Pla inclinat|Cargol|Torn" aria-label="Feina c"></select></li>
+          <li><span class="lletra">d</span><span class="enunciat">Subjectar molt fort una peça al banc del taller</span>
+            <select data-c="Q2FyZ29s" data-opcions="Palanca|Politja|Pla inclinat|Cargol|Torn" aria-label="Feina d"></select></li>
+          <li><span class="lletra">e</span><span class="enunciat">Treure una galleda d'aigua d'un pou</span>
+            <select data-c="VG9ybg==" data-opcions="Palanca|Politja|Pla inclinat|Cargol|Torn" aria-label="Feina e"></select></li>
+        </ul>
+        <div class="accions">
+          <button type="button" data-accio="comprova">Comprova</button>
+          <button type="button" class="secundari" data-accio="solucio">Mostra la solució</button>
+          <button type="button" class="secundari" data-accio="neteja">Torna-ho a provar</button>
+          <span class="veredicte" aria-live="polite"></span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Raonament: fora del motor de correcció — s'entrega a part, a la seva pròpia pestanya -->
+    <section class="bloc raonament">
+      <div class="capsa">
+        <h2>Raona-ho amb les teves paraules</h2>
+        <div class="pregunta">
+          <label for="raon-1">1. Al laboratori 3, posa primer una rampa curta i després una de llarga. Explica què guanyes i què perds (la regla d'or).</label>
+          <textarea id="raon-1" rows="3" maxlength="300" placeholder="Escriu la teva resposta…"></textarea>
+          <span class="compt" data-per="raon-1">0 / 300</span>
+          <div class="model-resposta"><b>Resposta model:</b> Amb la rampa llarga faig menys força però camino més; amb la curta faig més força però camino menys. El que guanyo en força ho pago en camí.<p class="accepta">Accepta també: «amb la llarga costa menys però és més llarga» sense dir-ho com a regla (OK+); només «la llarga costa menys» (OK). Dir que la llarga costa més = NO.</p></div>
+        </div>
+        <div class="pregunta">
+          <label for="raon-2">2. Per què diem que el torn és «una palanca que dona voltes»? Fes servir les paraules fulcre, braç i força.</label>
+          <textarea id="raon-2" rows="3" maxlength="300" placeholder="Escriu la teva resposta…"></textarea>
+          <span class="compt" data-per="raon-2">0 / 300</span>
+          <div class="model-resposta"><b>Resposta model:</b> Perquè gira al voltant d'un punt fix, l'eix, que fa de fulcre. La manovella és el braç de la força i el radi del cilindre és el braç de la resistència: com més llarg el braç de la força, menys força cal.<p class="accepta">Accepta també: relaciona l'eix amb el fulcre i la manovella amb un braç (OK+); només «gira com una palanca» o «l'eix és el fulcre» (OK).</p></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és un vici» · Còpia amb solucions, ús intern del professorat</p>
+    </footer>
+
+    <script src="../assets/motor-fitxa.js"></script>
+    <script>
+      // Mateixa URL que S1 i S2: és el mateix full de càlcul.
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbxXcgmuqEghVayqajZL-sYY8dNcPXuKbjXQNXoA90HjE0QE2t3mq_EcvKa7Gk40RCBxBA/exec";
+      FitxaEngine.init({
+        // ⚙️ Còpia només per al professorat, generada amb eines/genera-solucions.py:
+        // mostra les solucions i no envia res al full de càlcul.
+        activitat: "S3 Màquines simples",
+        ambSolucions: true,
+        opcions: [],
+        titols: {
+          a1: "1 Palanca",
+          a2: "2 Politja",
+          a3: "3 Pla inclinat",
+          a4: "4 Cargol",
+          a5: "5 Torn",
+          a6: "6 Quina màquina",
+        },
+      });
+
+      // codi propi: entrega separada dels raonaments (segona pestanya al mateix full)
+      const btnEntrega = document.getElementById("btn-entrega");
+      if (btnEntrega) {
+        btnEntrega.addEventListener("click", () => {
+          const nom = document.getElementById("camp-nom").value.trim();
+          const grup = document.getElementById("camp-grup").value;
+          if (!nom || !grup) return;
+          if (!SCRIPT_URL || SCRIPT_URL.includes("ENGANXA_AQUI")) return;
+          const dades = new URLSearchParams({
+            sessio: "S3 Màquines simples — Raonaments",
+            nom,
+            grup,
+            resposta_1: document.getElementById("raon-1").value.trim(),
+            resposta_2: document.getElementById("raon-2").value.trim(),
+          });
+          fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: dades });
+        });
+      }
+      document.querySelectorAll(".compt[data-per]").forEach((c) => {
+        const t = document.getElementById(c.dataset.per);
+        t.addEventListener("input", () => { c.textContent = t.value.length + " / " + t.maxLength; });
+      });
+
+      // ================= codi propi: els cinc laboratoris =================
+      const $ = (id) => document.getElementById(id);
+      const num = (x, d = 2) => Number(x.toFixed(d)).toLocaleString("ca-ES");
+      const NS = "http://www.w3.org/2000/svg";
+      const C = { f: "#b8352a", r: "#1d6fb8", ink: "#15242b", fusta: "#c9a06b", pedra: "#9aa3ad", terra: "#8c6d46", ok: "#1c7f58" };
+      function el(tag, attrs, pare) {
+        const e = document.createElementNS(NS, tag);
+        for (const k in attrs) e.setAttribute(k, attrs[k]);
+        if (pare) pare.appendChild(e);
+        return e;
+      }
+      function text(pare, x, y, t, attrs = {}) {
+        const e = el("text", Object.assign({ x, y, "font-family": "IBM Plex Sans, sans-serif", "font-size": 13, fill: C.ink }, attrs), pare);
+        e.textContent = t;
+        return e;
+      }
+      function defs(svg) {
+        const d = el("defs", {}, svg);
+        ["f", "r", "ink"].forEach((k) => {
+          const m = el("marker", { id: svg.id + "-a" + k, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" }, d);
+          el("path", { d: "M0,0 L10,5 L0,10 z", fill: C[k] }, m);
+        });
+      }
+      function fletxa(pare, x1, y1, x2, y2, k, w = 4) {
+        const a = Math.atan2(y2 - y1, x2 - x1), L = 8 + w * 2, A = 0.45;
+        const bx = x2 - L * Math.cos(a), by = y2 - L * Math.sin(a);
+        el("line", { x1, y1, x2: bx, y2: by, stroke: C[k], "stroke-width": w }, pare);
+        const p1 = [x2 - L * Math.cos(a - A), y2 - L * Math.sin(a - A)], p2 = [x2 - L * Math.cos(a + A), y2 - L * Math.sin(a + A)];
+        return el("polygon", { points: `${x2},${y2} ${p1} ${p2}`, fill: C[k] }, pare);
+      }
+      function lliga(ids, fn) { ids.forEach((id) => $(id).addEventListener("input", fn)); fn(); }
+
+      // ---------- 1 · Palanca ----------
+      (function () {
+        const svg = $("sv-palanca");
+        function dibuixa() {
+          const R = +$("pR").value, d2 = +$("pd2").value, d1 = +$("pd1").value, F = +$("pF").value;
+          $("o-pR").textContent = R + " N"; $("o-pd2").textContent = num(d2) + " m";
+          $("o-pd1").textContent = num(d1) + " m"; $("o-pF").textContent = F + " N";
+          const Mr = R * d2, Mf = F * d1, Fcal = Mr / d1;
+          const eq = Math.abs(Mf - Mr) <= Mr * 0.02;
+          let ang = eq ? 0 : Math.max(-14, Math.min(14, ((Mr - Mf) / Math.max(Mr, Mf)) * 14));
+          svg.innerHTML = ""; defs(svg);
+          const fx = 210, fy = 160, s = 55;
+          el("line", { x1: 10, y1: 185, x2: 410, y2: 185, stroke: C.terra, "stroke-width": 3 }, svg);
+          el("polygon", { points: `${fx - 18},185 ${fx + 18},185 ${fx},${fy + 4}`, fill: C.pedra, stroke: C.ink, "stroke-width": 1.5 }, svg);
+          const g = el("g", { transform: `rotate(${-ang} ${fx} ${fy})` }, svg);
+          el("line", { x1: fx - 2.1 * s, y1: fy, x2: fx + 3.1 * s, y2: fy, stroke: C.fusta, "stroke-width": 9, "stroke-linecap": "round" }, g);
+          const xr = fx - d2 * s, xf = fx + d1 * s;
+          const mida = 16 + R / 40;
+          el("rect", { x: xr - mida / 2, y: fy - 5 - mida, width: mida, height: mida, fill: C.pedra, stroke: C.ink }, g);
+          text(g, xr, fy - 10 - mida, "R", { "text-anchor": "middle", fill: C.r, "font-weight": 700 });
+          if (F > 0) { fletxa(g, xf, fy - 70, xf, fy - 8, "f", 3 + F / 150); text(g, xf + 8, fy - 55, "F", { fill: C.f, "font-weight": 700 }); }
+          const yc = 205;
+          [[xr, "r", "d₂ = " + num(d2) + " m", "end", fx - 6], [xf, "f", "d₁ = " + num(d1) + " m", "start", fx + 6]].forEach(([x, k, t, an, tx]) => {
+            el("line", { x1: fx, y1: yc, x2: x, y2: yc, stroke: C[k], "stroke-width": 2 }, svg);
+            el("line", { x1: x, y1: yc - 6, x2: x, y2: yc + 6, stroke: C[k], "stroke-width": 2 }, svg);
+            text(svg, tx, yc + 20, t, { "text-anchor": an, fill: C[k], "font-size": 12 });
+          });
+          el("line", { x1: fx, y1: yc - 6, x2: fx, y2: yc + 6, stroke: C.ink, "stroke-width": 2 }, svg);
+          text(svg, fx + 22, 180, "fulcre", { "font-size": 11 });
+          const estat = eq ? '<span class="estat ok">Equilibri!</span>' : Mf < Mr ? '<span class="estat ko">Guanya la resistència: fes més força o allarga el braç.</span>' : '<span class="estat ko">Fas massa força: la barra puja de cop.</span>';
+          $("l-palanca").innerHTML = `${estat}<br>Gira cap a la força: <b>F · d₁ = ${F} · ${num(d1)} = ${num(Mf, 1)}</b> · Gira cap a la resistència: <b>R · d₂ = ${R} · ${num(d2)} = ${num(Mr, 1)}</b><br>Per estar en equilibri cal <b>F = ${num(Fcal, 1)} N</b> · Avantatge mecànic <b>i = ${num(d1 / d2)}</b>`;
+        }
+        lliga(["pR", "pd2", "pd1", "pF"], dibuixa);
+      })();
+
+      // ---------- 2 · Politja ----------
+      (function () {
+        const svg = $("sv-politja");
+        function dibuixa() {
+          const n = +$("tN").value, R = +$("tR").value, corda = +$("tC").value;
+          const cordes = n === 0 ? 1 : 2 * n, F = R / cordes, puja = corda / cordes;
+          $("o-tR").textContent = R + " N"; $("o-tC").textContent = num(corda) + " m";
+          svg.innerHTML = ""; defs(svg);
+          el("rect", { x: 20, y: 8, width: 380, height: 12, fill: C.terra }, svg);
+          const sostre = 20, base = 205, pujaPx = puja * 35;
+          if (n === 0) {
+            const cx = 180, cy = 50, r = 22;
+            el("line", { x1: cx, y1: sostre, x2: cx, y2: cy, stroke: C.ink, "stroke-width": 2 }, svg);
+            el("circle", { cx, cy, r, fill: "#fff", stroke: C.ink, "stroke-width": 2 }, svg);
+            const top = base - 40 - pujaPx;
+            el("line", { x1: cx - r, y1: cy, x2: cx - r, y2: top, stroke: C.r, "stroke-width": 3 }, svg);
+            el("line", { x1: cx + r, y1: cy, x2: cx + r, y2: 225, stroke: C.ink, "stroke-width": 2 }, svg);
+            el("rect", { x: cx - r - 25, y: top, width: 50, height: 40, fill: C.pedra, stroke: C.ink }, svg);
+            text(svg, cx - r, top + 25, "R", { "text-anchor": "middle", fill: C.r, "font-weight": 700 });
+            fletxa(svg, cx + r, 200, cx + r, 245, "f");
+          } else {
+            const xs = [], top = 120 - pujaPx;
+            for (let i = 0; i < cordes; i++) xs.push(90 + i * (200 / (cordes - 1 || 1)));
+            el("rect", { x: 70, y: top, width: 240, height: 14, fill: "#d5d9de", stroke: C.ink }, svg);
+            xs.forEach((x) => el("line", { x1: x, y1: sostre, x2: x, y2: top, stroke: C.r, "stroke-width": 3 }, svg));
+            for (let i = 0; i < n; i++) el("circle", { cx: 90 + (i * 2 + 0.5) * (200 / (cordes - 1)), cy: top + 7, r: 14, fill: "#fff", stroke: C.ink, "stroke-width": 2 }, svg);
+            el("rect", { x: 155, y: top + 30, width: 70, height: 45, fill: C.pedra, stroke: C.ink }, svg);
+            el("line", { x1: 190, y1: top + 14, x2: 190, y2: top + 30, stroke: C.ink, "stroke-width": 2 }, svg);
+            text(svg, 190, top + 58, "R", { "text-anchor": "middle", fill: C.r, "font-weight": 700 });
+            el("line", { x1: 350, y1: sostre, x2: 350, y2: 215, stroke: C.ink, "stroke-width": 2 }, svg);
+            fletxa(svg, 350, 205, 350, 248, "f");
+            text(svg, 200, 252, `${cordes} cordes blaves aguanten la càrrega`, { "text-anchor": "middle", fill: C.r, "font-size": 12 });
+          }
+          text(svg, 385, 235, "F", { fill: C.f, "font-weight": 700 });
+          const fmla = n === 0 ? `F = R = ${R} N` : `F = R ÷ (2 · ${n}) = ${R} ÷ ${cordes} = ${num(F, 1)} N`;
+          $("l-politja").innerHTML = `Cordes que aguanten la càrrega: <b>${cordes}</b> · <b>${fmla}</b> · i = <b>${cordes}</b><br>Has estirat <b>${num(corda)} m</b> de corda i la càrrega ha pujat <b>${num(puja)} m</b>. ${n === 0 ? "Amb la corriola no estalvies força: només estires cap avall, que és més còmode." : "Menys força, però més corda: és la regla d'or."}`;
+        }
+        lliga(["tN", "tR", "tC"], dibuixa);
+        $("tN").addEventListener("change", dibuixa);
+      })();
+
+      // ---------- 3 · Pla inclinat ----------
+      (function () {
+        const svg = $("sv-pla");
+        function dibuixa() {
+          const P = +$("lP").value, h = +$("lh").value;
+          const lEl = $("ll");
+          if (+lEl.value < h) lEl.value = h;
+          const l = +lEl.value;
+          $("o-lP").textContent = P + " N"; $("o-lh").textContent = num(h) + " m"; $("o-ll").textContent = num(l) + " m";
+          const F = (P * h) / l;
+          const base = Math.sqrt(Math.max(l * l - h * h, 0));
+          const s = Math.min(330 / Math.max(base, 0.01), 160 / h, 110);
+          const x0 = 400 - base * s - 30, y0 = 190, x1 = 400 - 30, y1 = 190 - h * s;
+          svg.innerHTML = ""; defs(svg);
+          el("line", { x1: 5, y1: 190, x2: 415, y2: 190, stroke: C.terra, "stroke-width": 3 }, svg);
+          el("polygon", { points: `${x0},${y0} ${x1},${y0} ${x1},${y1}`, fill: "#e8dcc8", stroke: C.ink, "stroke-width": 1.5 }, svg);
+          el("rect", { x: x1, y: y1, width: 28, height: 190 - y1, fill: "#d5d9de", stroke: C.ink }, svg);
+          const ang = Math.atan2(h, base || 0.0001), mx = x0 + (x1 - x0) * 0.45, my = y0 + (y1 - y0) * 0.45;
+          const g = el("g", { transform: `translate(${mx} ${my}) rotate(${(-ang * 180) / Math.PI})` }, svg);
+          el("rect", { x: -16, y: -28, width: 32, height: 28, fill: C.fusta, stroke: C.ink }, g);
+          fletxa(g, 18, -14, 18 + 20 + Math.min(F / 6, 120), -14, "f", 3);
+          text(svg, x1 + 34, (y0 + y1) / 2, "h", { fill: C.ink, "font-weight": 700 });
+          text(svg, x0 + (x1 - x0) * 0.75 - 14 * Math.sin(ang), y0 + (y1 - y0) * 0.75 - 14 * Math.cos(ang), "l", { fill: C.ink, "font-weight": 700, "font-size": 15 });
+          $("l-pla").innerHTML = `<b>F = P · h ÷ l = ${P} · ${num(h)} ÷ ${num(l)} = ${num(F, 1)} N</b> · i = l ÷ h = <b>${num(l / h)}</b><br>Per pujar la caixa <b>${num(h)} m</b> camines <b>${num(l)} m</b> de rampa.${l === h ? " La rampa és vertical: és com aixecar-la de dret!" : ""}`;
+        }
+        lliga(["lP", "lh", "ll"], dibuixa);
+      })();
+
+      // ---------- 4 · Cargol ----------
+      (function () {
+        const svg = $("sv-cargol");
+        function dibuixa() {
+          const F = +$("cF").value, r = +$("cr").value, p = +$("cp").value;
+          $("o-cF").textContent = F + " N"; $("o-cr").textContent = r + " mm"; $("o-cp").textContent = num(p) + " mm";
+          const R = (F * 2 * Math.PI * r) / p;
+          svg.innerHTML = ""; defs(svg);
+          const cx = 90, top = 40, h = 150, w = 40;
+          el("rect", { x: cx - w / 2, y: top, width: w, height: h, fill: "#d5d9de", stroke: C.ink }, svg);
+          for (let y = top + 4; y < top + h; y += p * 7) el("line", { x1: cx - w / 2, y1: y, x2: cx + w / 2, y2: y + p * 3.5, stroke: C.ink, "stroke-width": 1.4 }, svg);
+          el("rect", { x: cx - 32, y: top - 18, width: 64, height: 18, fill: "#9aa3ad", stroke: C.ink }, svg);
+          const L = 40 + r * 0.9;
+          el("line", { x1: cx, y1: top - 9, x2: cx + L, y2: top - 9, stroke: C.ink, "stroke-width": 7, "stroke-linecap": "round" }, svg);
+          fletxa(svg, cx + L - 4, top - 9 + 50, cx + L - 4, top + 5, "f", 3);
+          text(svg, cx + L + 4, top + 40, "F", { fill: C.f, "font-weight": 700 });
+          text(svg, cx + L / 2, top - 18, "r", { "text-anchor": "middle", "font-weight": 700 });
+          text(svg, cx + w / 2 + 6, top + 30, "pas p", { "font-size": 11 });
+          fletxa(svg, cx, top + h + 2, cx, top + h + 22, "r", 3);
+          text(svg, cx + 10, top + h + 20, "R", { fill: C.r, "font-weight": 700 });
+          $("l-cargol").innerHTML = `<b>R = F · 2 · π · r ÷ p = ${F} · 2 · 3,14 · ${r} ÷ ${num(p)} ≈ ${Math.round(R).toLocaleString("ca-ES")} N</b> · i ≈ <b>${Math.round(R / F).toLocaleString("ca-ES")}</b><br>En una volta la mà recorre <b>${num((2 * Math.PI * r) / 1000)} m</b> i el cargol avança només <b>${num(p)} mm</b>. Per avançar 1 cm calen <b>${num(10 / p, 1)} voltes</b>.`;
+        }
+        lliga(["cF", "cr", "cp"], dibuixa);
+      })();
+
+      // ---------- 5 · Torn ----------
+      (function () {
+        const svg = $("sv-torn");
+        function dibuixa() {
+          const R = +$("nR").value, re = +$("nre").value, Rm = +$("nRm").value;
+          $("o-nR").textContent = R + " N"; $("o-nre").textContent = re + " cm"; $("o-nRm").textContent = Rm + " cm";
+          const F = (R * re) / Rm, s = 2.4, cx = 170, cy = 90;
+          svg.innerHTML = ""; defs(svg);
+          el("circle", { cx, cy, r: Rm * s, fill: "none", stroke: C.f, "stroke-width": 1.5, "stroke-dasharray": "5 4" }, svg);
+          el("circle", { cx, cy, r: re * s, fill: C.fusta, stroke: C.ink, "stroke-width": 1.5 }, svg);
+          el("circle", { cx, cy, r: 3, fill: C.ink }, svg);
+          el("line", { x1: cx, y1: cy, x2: cx + Rm * s, y2: cy, stroke: C.ink, "stroke-width": 5, "stroke-linecap": "round" }, svg);
+          fletxa(svg, cx + Rm * s, cy - 2, cx + Rm * s, cy + 50, "f", 3);
+          text(svg, cx + Rm * s + 6, cy + 40, "F", { fill: C.f, "font-weight": 700 });
+          text(svg, cx + (Rm * s) / 2, cy - 8, "Rₘ", { "text-anchor": "middle", fill: C.f });
+          el("line", { x1: cx - re * s, y1: cy, x2: cx - re * s, y2: 195, stroke: C.r, "stroke-width": 2.5 }, svg);
+          el("polygon", { points: `${cx - re * s - 18},195 ${cx - re * s + 18},195 ${cx - re * s + 13},228 ${cx - re * s - 13},228`, fill: C.pedra, stroke: C.ink }, svg);
+          text(svg, cx - re * s, 216, "R", { "text-anchor": "middle", fill: C.r, "font-weight": 700 });
+          text(svg, cx - re * s - 6, cy - 10, "rₑ", { "text-anchor": "end", fill: C.r });
+          text(svg, cx + 6, cy + 16, "eix", { "font-size": 11 });
+          $("l-torn").innerHTML = `<b>F · ${Rm} = ${R} · ${re}</b> → <b>F = ${R * re} ÷ ${Rm} = ${num(F, 1)} N</b> · i = Rₘ ÷ rₑ = <b>${num(Rm / re)}</b><br>Per pujar la galleda 1 m, la mà recorre <b>${num(Rm / re)} m</b> donant voltes.`;
+        }
+        lliga(["nR", "nre", "nRm"], dibuixa);
+      })();
+    </script>
+  </body>
+</html>
