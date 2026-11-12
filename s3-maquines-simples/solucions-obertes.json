@@ -1,0 +1,10 @@
+{
+  "raon-1": {
+    "model": "Amb la rampa llarga faig menys força però camino més; amb la curta faig més força però camino menys. El que guanyo en força ho pago en camí.",
+    "accepta": "«amb la llarga costa menys però és més llarga» sense dir-ho com a regla (OK+); només «la llarga costa menys» (OK). Dir que la llarga costa més = NO."
+  },
+  "raon-2": {
+    "model": "Perquè gira al voltant d'un punt fix, l'eix, que fa de fulcre. La manovella és el braç de la força i el radi del cilindre és el braç de la resistència: com més llarg el braç de la força, menys força cal.",
+    "accepta": "relaciona l'eix amb el fulcre i la manovella amb un braç (OK+); només «gira com una palanca» o «l'eix és el fulcre» (OK)."
+  }
+}
