@@ -18,7 +18,7 @@
     <div class="barra">
       <div class="barra-int">
         <span class="xip">Prova 2 · Màquines simples · versió amb suport</span>
-        <span class="marcador">Part A · digital · 6 punts</span>
+        <span class="marcador">Prova digital · 10 punts</span>
       </div>
     </div>
 
@@ -33,8 +33,9 @@
     <section class="avis-prova" aria-label="Instruccions">
       <ul>
         <li>Escriu el teu <b>nom i cognom</b> tal com surten a la llista, tria el grup i escriu el <b>codi</b> que et dirà el professor.</li>
-        <li>Hi ha <b>4 preguntes</b>. Ves passant amb el botó <b>Següent</b>. Pots tornar enrere.</li>
-        <li>A cada pregunta tens el botó <b>🔊 Escolta</b> si vols que te la llegeixi.</li>
+        <li>Hi ha <b>6 preguntes</b>. Ves passant amb el botó <b>Següent</b>. Pots tornar enrere.</li>
+        <li>Després de cada resposta prem <b>Comprova</b>. Si no l'encertes, et sortirà una <b>pista</b> i ho podràs tornar a provar. Pots acabar-les totes: les pistes t'ajuden, però com menys en facis servir, millor nota.</li>
+        <li>Als dibuixos hi tens les dades. A la pregunta 5 has de <b>moure un control</b> fins que la màquina quedi com diu l'enunciat.</li>
         <li>Al final, prem <b>Entrega la prova</b>. Només la pots entregar <b>una vegada</b>.</li>
       </ul>
     </section>
@@ -89,6 +90,7 @@
     <footer>Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és un vici»</footer>
 
     <script src="contingut-suport.js"></script>
+    <script src="../assets/simuladors-prova.js"></script>
     <script src="../assets/motor-prova.js"></script>
     <script>
       // ⚠️ La mateixa URL de l'Apps Script que fas servir a S1 i S2 (mateix full de càlcul).
@@ -100,7 +102,8 @@
         xifrat: PROVA_SUPORT_XIFRADA,
         clauLocal: "prova2-suport",
         pasAPas: true,
-        escolta: true,
+        escolta: false,
+        pistes: true,
       });
     </script>
   </body>
