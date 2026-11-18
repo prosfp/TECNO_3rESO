@@ -56,12 +56,12 @@ const SimProva = (function () {
       s += `<line x1="${fx + m * S}" y1="${by - 4}" x2="${fx + m * S}" y2="${by + 6}" stroke="${C.fustaV}" stroke-width="${Number.isInteger(m) ? 2 : 1}"/>` +
         (Number.isInteger(m) ? txt(fx + m * S, by + 24, m + " m", { mida: 11, color: C.fustaV, pes: 400 }) : "");
     s += `<polygon points="${xr - 30},${by - 4} ${xr - 24},${by - 44} ${xr},${by - 56} ${xr + 24},${by - 44} ${xr + 28},${by - 4}" fill="${C.pedra}" stroke="${C.tinta}" stroke-width="2"/>`;
-    s += txt(xr, by - 70, "R = " + num(p.R) + (p.R === "?" ? "" : " N"), { color: C.R });
+    s += txt(xr, by - 70, p.R == null ? "R" : "R = " + num(p.R) + (p.R === "?" ? "" : " N"), { color: C.R });
     s += fletxa(xf, by - 62, xf, by - 8, C.F);
-    s += txt(xf, by - 70, "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { color: C.F });
+    s += txt(xf, by - 70, p.F == null ? "F" : "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { color: C.F });
     s += txt(fx, 182, "fulcre", { mida: 12, pes: 400 });
-    s += cota(xr, fx, 200, "d₂ = " + num(d2) + (p.d2 === "?" ? "" : " m"));
-    s += cota(fx, xf, 200, "d₁ = " + (p.d1 === "?" && p.d1v == null ? "?" : num(d1) + " m"));
+    if (!p.net) s += cota(xr, fx, 200, "d₂ = " + num(d2) + (p.d2 === "?" ? "" : " m"));
+    if (!p.net) s += cota(fx, xf, 200, "d₁ = " + (p.d1 === "?" && p.d1v == null ? "?" : num(d1) + " m"));
     return svg(520, 230, s, "Palanca amb la resistència, el fulcre i la força");
   }
 
@@ -129,11 +129,11 @@ const SimProva = (function () {
     s += txt(cx + 80 * ux + 8, cy + 70 * uy - 40, "F", { color: C.F });
     // cotes
     s += `<g stroke="${C.cota}" stroke-width="1.5"><line x1="${xt + 14}" y1="${yt}" x2="${xt + 14}" y2="${base}"/></g>`;
-    s += txt(xt + 20, (yt + base) / 2 + 5, "h = " + num(h) + " m", { ancla: "start", mida: 14, color: C.cota });
+    if (!p.net) s += txt(xt + 20, (yt + base) / 2 + 5, "h = " + num(h) + " m", { ancla: "start", mida: 14, color: C.cota });
     const mx = x0 + run * 0.72 + 30 * Math.sin(a), my = base - hp * 0.72 + 30 * Math.cos(a);
-    s += txt(mx, my, "l = " + (l === "?" ? "?" : num(l) + " m"), { mida: 14, color: C.cota });
-    s += txt(500, 28, "P = " + num(p.P) + " N", { ancla: "end", color: C.R });
-    s += txt(500, 50, "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { ancla: "end", color: C.F });
+    if (!p.net) s += txt(mx, my, "l = " + (l === "?" ? "?" : num(l) + " m"), { mida: 14, color: C.cota });
+    if (p.P != null) s += txt(500, 28, "P = " + num(p.P) + " N", { ancla: "end", color: C.R });
+    if (p.F != null) s += txt(500, 50, "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { ancla: "end", color: C.F });
     return svg(520, 230, s, "Rampa amb una caixa, l'alçada i la llargada");
   }
 
@@ -152,14 +152,29 @@ const SimProva = (function () {
     s += `<line x1="${cx - rp}" y1="${cy}" x2="${cx - rp}" y2="${cy + 95}" stroke="${C.corda}" stroke-width="2.6"/>`;
     s += `<polygon points="${cx - rp - 22},${cy + 95} ${cx - rp + 22},${cy + 95} ${cx - rp + 16},${cy + 135} ${cx - rp - 16},${cy + 135}" fill="${C.pedra}" stroke="${C.tinta}" stroke-width="2"/>`;
     s += txt(cx - rp, cy + 121, "R", { color: "#fff", halo: 0 });
-    s += cota(cx, cx + Rp, cy + 62, "Rm = " + (Rm === "?" ? "?" : num(Rm) + " cm"));
-    s += txt(cx - rp - 6, cy - rp - 10, "re = " + num(re) + " cm", { mida: 14, color: C.cota, ancla: "end" });
-    s += txt(460, 28, "R = " + num(p.R) + (p.R === "R" ? "" : " N"), { ancla: "end", color: C.R });
-    s += txt(460, 50, "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { ancla: "end", color: C.F });
+    if (!p.net) s += cota(cx, cx + Rp, cy + 62, "Rm = " + (Rm === "?" ? "?" : num(Rm) + " cm"));
+    if (!p.net) s += txt(cx - rp - 6, cy - rp - 10, "re = " + num(re) + " cm", { mida: 14, color: C.cota, ancla: "end" });
+    if (p.R != null) s += txt(460, 28, "R = " + num(p.R) + " N", { ancla: "end", color: C.R });
+    if (p.F != null) s += txt(460, 50, "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { ancla: "end", color: C.F });
     return svg(470, 245, s, "Torn amb el cilindre, la manovella i la galleda");
   }
 
-  const MAQ = { palanca, politja, pla, torn };
+  // ---------------- CARGOL (gat de cargol) ----------------
+  function cargol(p) {
+    const cx = 150;
+    let s = terra(20, 470, 220);
+    s += `<polygon points="${cx - 60},220 ${cx + 60},220 ${cx + 32},180 ${cx - 32},180" fill="${C.pedra}" stroke="${C.tinta}" stroke-width="2"/>`;
+    s += `<rect x="${cx - 12}" y="60" width="24" height="120" fill="#d9dde0" stroke="${C.tinta}" stroke-width="2"/>`;
+    for (let y = 68; y < 176; y += 14) s += `<line x1="${cx - 12}" y1="${y + 8}" x2="${cx + 12}" y2="${y}" stroke="${C.cota}" stroke-width="2"/>`;
+    s += `<rect x="${cx - 40}" y="48" width="80" height="14" fill="${C.pedra}" stroke="${C.tinta}" stroke-width="2"/>`;
+    s += `<line x1="${cx}" y1="120" x2="${cx + 190}" y2="120" stroke="${C.tinta}" stroke-width="7" stroke-linecap="round"/>`;
+    s += fletxa(cx + 190, 92, cx + 190, 152, C.F) + txt(cx + 208, 150, "F", { color: C.F });
+    s += fletxa(cx, 6, cx, 44, C.R) + txt(cx + 22, 30, "R", { color: C.R });
+    if (p.R != null) s += txt(460, 28, "R = " + num(p.R) + " N", { ancla: "end", color: C.R });
+    return svg(470, 235, s, "Gat de cargol amb la maneta");
+  }
+
+  const MAQ = { palanca, politja, pla, torn, cargol };
 
   function dibuixa(e) { return MAQ[e.maq] ? MAQ[e.maq](e) : ""; }
 
