@@ -18,10 +18,13 @@ const SimProva = (function () {
     const [e, d] = String(Math.round(v * 100) / 100).split(".");
     return e.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (d ? "," + d : "");
   };
+  const sub = (s) => String(s).replace(/\bRm\b/g, 'R<tspan baseline-shift="sub" font-size="72%">m</tspan>')
+    .replace(/\bre\b/g, 'r<tspan baseline-shift="sub" font-size="72%">e</tspan>')
+    .replace(/d₁/g, 'd<tspan baseline-shift="sub" font-size="72%">1</tspan>').replace(/d₂/g, 'd<tspan baseline-shift="sub" font-size="72%">2</tspan>');
   const txt = (x, y, s, o = {}) =>
     `<text x="${x}" y="${y}" font-family="IBM Plex Sans,Arial,sans-serif" font-size="${o.mida || 15}" ` +
     `fill="${o.color || C.tinta}" text-anchor="${o.ancla || "middle"}" font-weight="${o.pes || 600}" ` +
-    `paint-order="stroke" stroke="#f4f7f8" stroke-width="${o.halo ?? 4}" stroke-linejoin="round">${s}</text>`;
+    `paint-order="stroke" stroke="#f4f7f8" stroke-width="${o.halo ?? 4}" stroke-linejoin="round">${sub(s)}</text>`;
   const fletxa = (x1, y1, x2, y2, color) => {
     const a = Math.atan2(y2 - y1, x2 - x1), L = 11;
     const p1 = [x2 - L * Math.cos(a - 0.45), y2 - L * Math.sin(a - 0.45)];
@@ -77,7 +80,7 @@ const SimProva = (function () {
       s += txt(cx - r, ym + 38, "R", { color: "#fff", halo: 0 });
       s += fletxa(cx + r, ym + 20, cx + r, ym + 62, C.F);
       s += txt(cx + r + 40, ym + 50, "F", { color: C.F });
-      s += txt(14, 292, "corriola (politja fixa): només canvia la direcció", { mida: 13, pes: 400, ancla: "start" });
+
     } else {
       const dx = 2 * r + 14, x0 = 180 - (n * dx) / 2;
       const mob = [], fix = [];
@@ -102,10 +105,10 @@ const SimProva = (function () {
       s += `<line x1="180" y1="${ym + 2 * r + 4}" x2="180" y2="${ym + 2 * r + 16}" stroke="${C.tinta}" stroke-width="3"/>`;
       s += `<rect x="148" y="${ym + 2 * r + 16}" width="64" height="40" fill="${C.pedra}" stroke="${C.tinta}" stroke-width="2"/>`;
       s += txt(180, ym + 2 * r + 42, "R", { color: "#fff", halo: 0 });
-      s += txt(14, 292, n + (n === 1 ? " politja mòbil · " : " politges mòbils · ") + 2 * n + " cordes aguanten R", { mida: 13, pes: 400, ancla: "start" });
+      if (p.R != null) s += txt(14, 292, n + (n === 1 ? " politja mòbil · " : " politges mòbils · ") + 2 * n + " cordes aguanten R", { mida: 13, pes: 400, ancla: "start" });
     }
-    s += txt(14, 316, "R = " + num(p.R) + (p.R === "?" || p.R === "R" ? "" : " N"), { color: C.R, ancla: "start" });
-    s += txt(160, 316, "F = " + num(p.F) + (p.F === "?" || p.F === "F" ? "" : " N"), { color: C.F, ancla: "start" });
+    if (p.R != null) s += txt(14, 316, "R = " + num(p.R) + (p.R === "?" ? "" : " N"), { color: C.R, ancla: "start" });
+    if (p.F != null) s += txt(160, 316, "F = " + num(p.F) + (p.F === "?" ? "" : " N"), { color: C.F, ancla: "start" });
     return svg(360, 326, s, "Muntatge de politges amb la càrrega i la força");
   }
 
