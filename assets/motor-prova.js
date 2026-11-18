@@ -352,6 +352,10 @@ const ProvaEngine = (function () {
     // esquema opcional d'una pregunta (SVG dins del contingut xifrat); "petita" = esquema de situació, més xicotet
     function figura(f) {
       // esquema dibuixat al moment (assets/simuladors-prova.js) a partir de les dades de la variant
+      // dos esquemes per comparar (A i B)
+      if (f.dada.esquemes && typeof SimProva !== "undefined")
+        return `<div class="comparacio">${f.dada.esquemes.map((e, i) =>
+          `<figure class="figura figura-svg"><figcaption>${String.fromCharCode(65 + i)}</figcaption>${SimProva.dibuixa(e)}</figure>`).join("")}</div>`;
       if (f.dada.esquema && typeof SimProva !== "undefined")
         return `<figure class="figura figura-svg${f.dada.petita ? " petita" : ""}">${SimProva.dibuixa(f.dada.esquema)}</figure>`;
       return f.dada.figura

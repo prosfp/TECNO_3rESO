@@ -112,3 +112,9 @@ body.suport .opcions-radio label{padding:.55rem .75rem}
 .esforc .frac{font-size:1em}
 .esforc span.frac{display:inline-flex;width:auto}
 .esforc span.frac>span{display:block;width:auto}
+
+/* dues imatges per comparar (A / B) */
+.comparacio{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.3rem 0 .8rem 2.2rem}
+.comparacio .figura-svg{margin:0 !important}
+.comparacio figcaption{font-family:var(--display);font-weight:700;font-size:1.3rem;margin-bottom:.2rem}
+@media(max-width:780px){.comparacio{grid-template-columns:1fr;margin-left:0}}
