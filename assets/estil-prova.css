@@ -84,3 +84,31 @@ body.suport .opcions-radio label{padding:.55rem .75rem}
 .fila-prova .figura-svg{margin:.3rem 0 .8rem 2.2rem}
 .figura-svg.petita svg{max-width:300px}
 @media(max-width:780px){.fila-prova .figura-svg{margin-left:0}}
+
+/* simuladors de les proves (assets/simuladors-prova.js) */
+.sim-cont{margin:.4rem 0 .4rem 2.2rem}
+.sim-cont .figura{margin:0 0 .5rem}
+.sim-control{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--rule);padding:.6rem .9rem;max-width:640px}
+.sim-control label{font-weight:600}
+.sim-control input[type=range]{flex:1;min-width:180px;accent-color:#c0392b}
+.sim-control output{font-family:var(--display);font-weight:700;min-width:7.5em}
+@media(max-width:780px){.sim-cont{margin-left:0}}
+
+/* pistes (versió amb suport amb «pistes: true») */
+.pistes{margin:.5rem 0 .2rem 2.2rem}
+.pistes .btn-comprova{margin-right:.6rem}
+.pista-msg{display:inline-block;margin:.3rem 0;font-weight:600}
+.pista-msg.ok{color:#1c7f58}
+.pista-msg.error{color:#a8760a}
+.pistes-llista{list-style:none;padding:0;margin:.4rem 0 0}
+.pistes-llista li{background:#fff8e6;border-left:4px solid #e0b23c;padding:.5rem .8rem;margin:.35rem 0}
+@media(max-width:780px){.pistes{margin-left:0}}
+.fila-prova.tipus-tria .pistes{grid-column:1/-1;margin-top:0}
+
+/* notació matemàtica: fraccions i subíndexs */
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .15em;line-height:1.15;font-size:.95em}
+.frac>span:first-child{border-bottom:1.6px solid currentColor;padding:0 .2em .05em}
+.frac>span:last-child{padding:.05em .2em 0}
+.esforc .frac{font-size:1em}
+.esforc span.frac{display:inline-flex;width:auto}
+.esforc span.frac>span{display:block;width:auto}

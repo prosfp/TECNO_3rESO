@@ -46,6 +46,10 @@
  *  - dosnivells: variant = {t:"afirmació", vf:"V"|"F", raons:["correcta","distractor",...]}
  *                (només puntua si encerta el V/F i també la raó)
  *  - unica:      variant = {t:"enunciat", figura?:"<svg>", opcions:["correcta","distractor",...]}
+ *  - simulador:  variant = {t:"enunciat", maq:"palanca"|"politja"|"pla"|"torn", par:{...},
+ *                  control:{clau, etiqueta, min, max, pas, unitat, inici?}, c: valor correcte}
+ *                (cal carregar assets/simuladors-prova.js; encerta si |resposta − c| < pas/2)
+ *  - unica i dosnivells admeten esquema:{maq, ...dades} per dibuixar la màquina amb les dades
  *  - oberta:     variant = {t:"enunciat", ajuda?:"inici de frase"}  → no puntua sola,
  *                s'envia a una pestanya a part perquè la corregeixi el professor.
  *
@@ -141,7 +145,11 @@ const ProvaEngine = (function () {
 
   // ---------- motor ----------
   function init(config) {
-    const { scriptUrl, xifrat, clauLocal = "prova", pasAPas = false, escolta: ambEscolta = false } = config;
+    const { scriptUrl, xifrat, clauLocal = "prova", pasAPas = false, escolta: ambEscolta = false, pistes: ambPistes = false } = config;
+    // pistes: true → cada pregunta té el botó «Comprova». Si no encerta, surt la pista següent
+    // (variant.pistes = ["…","…","…"]). Sempre pot acabar trobant la resposta; la nota de la
+    // pregunta baixa segons les pistes que ha necessitat i es registra el nivell de dependència.
+    const VALOR_PISTES = [1, 0.75, 0.5, 0.25];
 
     const elNom = $("#camp-nom"), elGrup = $("#camp-grup"), elCodi = $("#camp-codi");
     const btnInici = $("#btn-inici"), estatInici = $("#estat-inici");
@@ -343,9 +351,57 @@ const ProvaEngine = (function () {
 
     // esquema opcional d'una pregunta (SVG dins del contingut xifrat); "petita" = esquema de situació, més xicotet
     function figura(f) {
+      // esquema dibuixat al moment (assets/simuladors-prova.js) a partir de les dades de la variant
+      if (f.dada.esquema && typeof SimProva !== "undefined")
+        return `<figure class="figura figura-svg${f.dada.petita ? " petita" : ""}">${SimProva.dibuixa(f.dada.esquema)}</figure>`;
       return f.dada.figura
         ? `<figure class="figura figura-svg${f.dada.petita ? " petita" : ""}">${f.dada.figura}</figure>`
         : "";
+    }
+
+    function afegeixPistes(li, bloc, f) {
+      const caixa = document.createElement("div");
+      caixa.className = "pistes";
+      const btn = document.createElement("button");
+      btn.type = "button"; btn.className = "secundari btn-comprova"; btn.textContent = "Comprova";
+      const msg = document.createElement("p"); msg.className = "pista-msg"; msg.setAttribute("aria-live", "polite");
+      const llista = document.createElement("ol"); llista.className = "pistes-llista";
+      caixa.append(btn, msg, llista);
+      li.appendChild(caixa);
+
+      const bloqueja = () => {
+        li.querySelectorAll("input, select").forEach(el => { el.disabled = true; });
+        btn.hidden = true;
+      };
+      const pintaEstat = () => {
+        const e = estatPistes(f);
+        llista.innerHTML = f.dada.pistes.slice(0, e.pistes).map((p, k) => `<li><b>Pista ${k + 1}.</b> ${p}</li>`).join("");
+        if (e.ok) {
+          msg.textContent = e.pistes ? `✔ Correcte! (amb ${e.pistes} ${e.pistes === 1 ? "pista" : "pistes"})` : "✔ Correcte!";
+          msg.className = "pista-msg ok";
+          bloqueja();
+        }
+      };
+      btn.addEventListener("click", () => {
+        const r = respostes[f.clau];
+        const buit = r === undefined || r === "" || (bloc.tipus === "dosnivells" && (!r.vf || r.raon === undefined));
+        if (buit) { msg.textContent = "Primer respon i després prem Comprova."; msg.className = "pista-msg"; return; }
+        const e = Object.assign({}, estatPistes(f));
+        e.intents++;
+        if (encert(bloc, f, r)) {
+          e.ok = true;
+        } else {
+          if (e.pistes < f.dada.pistes.length) e.pistes++;
+          msg.textContent = e.pistes < f.dada.pistes.length
+            ? "Encara no. Llegeix la pista i torna-ho a provar."
+            : "Encara no. Fixa't bé en l'última pista: et diu com arribar a la resposta.";
+          msg.className = "pista-msg error";
+        }
+        respostes[f.clau + "#"] = e;
+        desaProgres();
+        pintaEstat();
+      });
+      pintaEstat();
     }
 
     function pintaFila(bloc, f, i) {
@@ -387,6 +443,18 @@ const ProvaEngine = (function () {
         li.appendChild(radios(nomCamp, f.opcions, respostes[f.clau], k => { respostes[f.clau] = k; desaProgres(); }));
       }
 
+      // simulador: l'alumne mou un control fins al valor que demana l'enunciat (sense dir-li si encerta)
+      if (bloc.tipus === "simulador") {
+        li.innerHTML =
+          `<div class="dn-cap"><span class="lletra">${lletra}</span><span class="enunciat">${f.dada.t}</span></div>`;
+        const cont = document.createElement("div");
+        cont.className = "sim-cont";
+        li.appendChild(cont);
+        SimProva.simulador(cont, f.dada, respostes[f.clau], x => { respostes[f.clau] = x; desaProgres(); });
+      }
+
+      if (ambPistes && f.dada.pistes) afegeixPistes(li, bloc, f);
+
       if (bloc.tipus === "oberta") {
         li.innerHTML =
           `<div class="dn-cap"><span class="lletra">${lletra}</span><span class="enunciat">${f.dada.t}</span></div>`;
@@ -408,9 +476,27 @@ const ProvaEngine = (function () {
     }
 
     // ---------- correcció ----------
+    function encert(b, f, r) {
+      if (b.tipus === "tria") return r === f.dada.c;
+      if (b.tipus === "dosnivells") return !!r && r.vf === f.dada.vf && String(r.raon) === "0";
+      if (b.tipus === "unica") return String(r) === "0";
+      if (b.tipus === "simulador") return typeof r === "number" && Math.abs(r - f.dada.c) < f.dada.control.pas / 2;
+      return false;
+    }
+    const estatPistes = (f) => respostes[f.clau + "#"] || { intents: 0, pistes: 0, ok: false };
+
+    function nivellDependencia(mitjana, sense) {
+      if (sense > 0.25) return "molt dependent (moltes preguntes sense resoldre)";
+      if (mitjana < 0.75) return "autònom";
+      if (mitjana < 1.5) return "ajuda puntual";
+      if (mitjana < 2.25) return "dependent";
+      return "molt dependent";
+    }
+
     function corregeix() {
       let punts = 0, max = 0;
       const detall = [], oberta = {}, variants = [];
+      let totalPistes = 0, preguntesPistes = 0, senseResoldre = 0;
       model.forEach((m, bi) => {
         const b = m.bloc;
         if (b.tipus === "oberta") {
@@ -420,21 +506,36 @@ const ProvaEngine = (function () {
           return;
         }
         const valor = b.punts / m.files.length;
-        let encerts = 0;
-        m.files.forEach(f => {
+        let encerts = 0, suma = 0;
+        const marques = [];
+        m.files.forEach((f, i) => {
           const r = respostes[f.clau];
-          let be = false;
-          if (b.tipus === "tria") be = r === f.dada.c;
-          if (b.tipus === "dosnivells") be = !!r && r.vf === f.dada.vf && String(r.raon) === "0";
-          if (b.tipus === "unica") be = String(r) === "0";
+          const be = encert(b, f, r);
+          let factor = be ? 1 : 0;
+          if (ambPistes && f.dada.pistes) {
+            const e = estatPistes(f);
+            factor = be ? VALOR_PISTES[Math.min(e.pistes, 3)] : 0;
+            totalPistes += e.pistes; preguntesPistes++;
+            if (!be) senseResoldre++;
+            marques.push(`${String.fromCharCode(97 + i)}${be ? "✓" : "✗"}${e.pistes}p${e.intents}i`);
+          }
           if (be) encerts++;
+          suma += factor;
           variants.push(`${f.clau}v${f.variant}${be ? "✓" : "✗"}`);
         });
-        const p = Math.round(encerts * valor * 100) / 100;
+        const p = Math.round(suma * valor * 100) / 100;
         punts += p; max += b.punts;
-        detall.push(`${bi + 1} ${b.titol}: ${encerts}/${m.files.length} → ${String(p).replace(".", ",")} p`);
+        detall.push(`${bi + 1} ${b.titol}: ${encerts}/${m.files.length} → ${String(p).replace(".", ",")} p` +
+          (marques.length ? ` [${marques.join(" ")}]` : ""));
       });
-      return { punts: Math.round(punts * 100) / 100, max, detall, oberta, variants };
+      let dependencia = "";
+      if (ambPistes && preguntesPistes) {
+        const mitjana = totalPistes / preguntesPistes;
+        dependencia = `pistes ${totalPistes} (${String(Math.round(mitjana * 100) / 100).replace(".", ",")}/pregunta) · ` +
+          `sense resoldre ${senseResoldre}/${preguntesPistes} · dependència: ${nivellDependencia(mitjana, senseResoldre / preguntesPistes)}`;
+        detall.unshift(dependencia);
+      }
+      return { punts: Math.round(punts * 100) / 100, max, detall, oberta, variants, dependencia };
     }
 
     function sensResposta() {
@@ -445,6 +546,7 @@ const ProvaEngine = (function () {
         if (m.bloc.tipus === "tria") falta = !r;
         if (m.bloc.tipus === "dosnivells") falta = !r || !r.vf || r.raon === undefined;
         if (m.bloc.tipus === "unica") falta = r === undefined;
+        if (m.bloc.tipus === "simulador") falta = r === undefined;
         if (falta) buides.push(bi);
       }));
       return buides;
@@ -492,7 +594,7 @@ const ProvaEngine = (function () {
         encerts: String(c.punts), // amb punt decimal: amb coma el full ho llegia com a 0
         total: c.max,
         percentatge,
-        activitats: `${pasAPas ? "versió amb suport" : "versió ordinària"} · ${minuts} min`,
+        activitats: `${pasAPas ? "versió amb suport" : "versió ordinària"} · ${minuts} min` + (c.dependencia ? ` · ${c.dependencia}` : ""),
         solucions: sortides, // aquí: nombre de vegades que ha sortit de la pàgina
         detall: c.detall.join(" · ") + " || model: " + c.variants.join(" ")
       });

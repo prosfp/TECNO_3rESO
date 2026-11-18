@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Prova 2 · Màquines simples (amb suport)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/estil.css" />
+    <link rel="stylesheet" href="../assets/estil-prova.css" />
+  </head>
+  <body class="suport">
+    <div class="barra">
+      <div class="barra-int">
+        <span class="xip">Prova 2 · Màquines simples · versió amb suport</span>
+        <span class="marcador">Prova digital · 10 punts</span>
+      </div>
+    </div>
+
+    <header class="portada">
+      <p class="sessio">Prova 2 · Tecnologia i Digitalització · 3r ESO</p>
+      <h1>Màquines simples</h1>
+      <p class="entradeta">
+        Fes-ho amb calma. Una pregunta cada vegada.
+      </p>
+    </header>
+
+    <section class="avis-prova" aria-label="Instruccions">
+      <ul>
+        <li>Escriu el teu <b>nom i cognom</b> tal com surten a la llista, tria el grup i escriu el <b>codi</b> que et dirà el professor.</li>
+        <li>Hi ha <b>6 preguntes</b>. Ves passant amb el botó <b>Següent</b>. Pots tornar enrere.</li>
+        <li>Després de cada resposta prem <b>Comprova</b>. Si no l'encertes, et sortirà una <b>pista</b> i ho podràs tornar a provar. Pots acabar-les totes: les pistes t'ajuden, però com menys en facis servir, millor nota.</li>
+        <li>Als dibuixos hi tens les dades. A la pregunta 5 has de <b>moure un control</b> fins que la màquina quedi com diu l'enunciat.</li>
+        <li>Al final, prem <b>Entrega la prova</b>. Només la pots entregar <b>una vegada</b>.</li>
+      </ul>
+    </section>
+
+    <section class="identificacio" id="bloc-identificacio">
+      <div class="id-caixa tres">
+        <div class="id-camp">
+          <label for="camp-nom">Nom i cognoms</label>
+          <input type="text" id="camp-nom" autocomplete="off" placeholder="Nom i cognom" />
+        </div>
+        <div class="id-camp">
+          <label for="camp-grup">Grup</label>
+          <select id="camp-grup">
+            <option value="">Tria el grup…</option>
+            <option value="3r ESO A">3r ESO A</option>
+            <option value="3r ESO B">3r ESO B</option>
+            <option value="3r ESO C">3r ESO C</option>
+          </select>
+        </div>
+        <div class="id-camp">
+          <label for="camp-codi">Codi de la prova</label>
+          <input type="text" id="camp-codi" autocomplete="off" autocapitalize="characters" placeholder="El diu el professor" />
+        </div>
+      </div>
+    </section>
+    <div class="id-inici" id="bloc-inici">
+      <button type="button" id="btn-inici">Comença la prova</button>
+      <p class="estat-entrega" id="estat-inici" aria-live="polite"></p>
+    </div>
+    <p class="resum-alumne" id="resum-alumne" hidden></p>
+
+    <p class="xuleta-titol">Xuleta: les cinc màquines simples</p>
+    <section class="mostrari formulari" aria-label="Fórmules de les màquines simples">
+      <div class="esforc" style="--c: var(--traccio)"><b>Palanca</b><span>F · d<sub>1</sub> = R · d<sub>2</sub><br />Com més lluny del fulcre empenys, menys força.</span></div>
+      <div class="esforc" style="--c: var(--compressio)"><b>Politja</b><span>Fixa: F = R<br />Mòbils: F = <span class="frac"><span>R</span><span>2 · n</span></span><br />n = politges mòbils</span></div>
+      <div class="esforc" style="--c: var(--flexio)"><b>Pla inclinat</b><span>F = <span class="frac"><span>P · h</span><span>l</span></span><br />Rampa més llarga, menys força.</span></div>
+      <div class="esforc" style="--c: var(--torsio)"><b>Cargol</b><span>Rampa enrotllada.<br />Pas més petit o clau més llarga: més força.</span></div>
+      <div class="esforc" style="--c: var(--cisallament)"><b>Torn</b><span>F · R<sub>m</sub> = R · r<sub>e</sub><br />Manovella més llarga, menys força.</span></div>
+    </section>
+
+    <main id="zona-prova" aria-live="polite"></main>
+
+    <section class="entrega" id="entrega" hidden>
+      <div class="entrega-caixa">
+        <h2>Entrega la prova</h2>
+        <p>Abans d'entregar, repassa que hagis respost totes les preguntes. Després ja no ho podràs canviar.</p>
+        <button type="button" id="btn-entrega">Entrega la prova</button>
+        <p class="estat-entrega" id="estat-entrega" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <footer>Institut del Ter · Tecnologia i Digitalització 3r ESO · SdA «La bici és un vici»</footer>
+
+    <script src="contingut-suport.js"></script>
+    <script src="../assets/simuladors-prova.js"></script>
+    <script src="../assets/motor-prova.js"></script>
+    <script>
+      // ⚠️ La mateixa URL de l'Apps Script que fas servir a S1 i S2 (mateix full de càlcul).
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbxXcgmuqEghVayqajZL-sYY8dNcPXuKbjXQNXoA90HjE0QE2t3mq_EcvKa7Gk40RCBxBA/exec";
+
+      ProvaEngine.init({
+        scriptUrl: SCRIPT_URL,
+        xifrat: PROVA_SUPORT_XIFRADA,
+        clauLocal: "prova2-suport",
+        pasAPas: true,
+        escolta: false,
+        pistes: true,
+      });
+    </script>
+  </body>
+</html>
